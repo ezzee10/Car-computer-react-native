@@ -9,7 +9,7 @@ export const ListItems = () => {
           id: 'bd7acbea-c1b1-46c2-aed5-3ad353abb28ba',
           title: 'teléfono-llave',
           subtitle: 'Configurar su teléfono como llave',
-          icon: 'home'
+          icon: 'home',
         },
         {
           id: '3ac68afc-c605-48d3-a4f8-fbd913aa97f63',
