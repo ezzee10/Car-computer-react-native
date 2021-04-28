@@ -13,7 +13,6 @@ export const ClimatizacionScreen = () => {
 const styles = StyleSheet.create({
     vista: {
       backgroundColor: 'black',
-      flex: 1,
-      borderWidth: 0
+      flex: 1
     }
 })

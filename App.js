@@ -6,6 +6,7 @@ import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/
 import { ClimatizacionScreen } from './components/Organism/ClimatizacionScreen';
 import { HomeScreen } from './components/Organism/HomeScreen';
 
+
 const App = () => {
 
   const Stack = createStackNavigator();
