@@ -3,7 +3,7 @@ import React from 'react';
 import 'react-native-gesture-handler';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import { ClimatizacionScreen } from './components/Organism/ClimatizacionScreen';
+import { LightScreen } from './components/Organism/LightScreen';
 import { HomeScreen } from './components/Organism/HomeScreen';
 
 
@@ -39,8 +39,8 @@ const App = () => {
           component={HomeScreen} 
         /> 
         <Stack.Screen 
-          name="climatización" 
-          component={ClimatizacionScreen} 
+          name="luces" 
+          component={LightScreen} 
         />
       </Stack.Navigator>
     </NavigationContainer>
