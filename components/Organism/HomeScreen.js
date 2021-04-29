@@ -1,15 +1,25 @@
 import React from 'react'
-import { View, StyleSheet, Image } from 'react-native';
-import { ListItems } from '../Atoms/ListItems';
+import { View, StyleSheet, Image, FlatList } from 'react-native';
+import {entries} from '../../Mocks/Entries';
+import { Entry } from '../Atoms/Entry';
 
 export const HomeScreen = () => {
 
+    const renderItem = ({item}) => (
+        <Entry title={item.title} subtitle={item.subtitle} iconName={item.icon}/>
+    )
 
     return (
 
         <View style={styles.vista}>
             <Image source={require('../../assets/images/car6.png')} style={styles.image}></Image>
-            <ListItems/>
+            <View>
+                <FlatList
+                    data={ entries }
+                    renderItem = {renderItem}
+                    keyExtractor= {item => item.id}
+                />
+            </View>
         </View>
   
     )
