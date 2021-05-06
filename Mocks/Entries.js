@@ -13,7 +13,7 @@ export const entries = [
     },
     {
       id: '58694a0f-3da1-471f-bd96-1455713e29d72',
-      title: 'controles',
+      title: 'conducción',
       icon: 'home'
     },
     {

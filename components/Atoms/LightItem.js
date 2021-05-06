@@ -1,10 +1,20 @@
+import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
-import React, {useState} from 'react'
+import { useDispatch } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native'
+import { switchStateLight } from '../../actions/lights';
 
-export const LightItem = ({ title, color }) => {
+export const LightItem = ({ item }) => {
 
-    const [lightState, setLightState] = useState(false);
+    const { title, active } = item;
+
+    const dispatch = useDispatch();
+
+    const toggleSwitch = () => {
+
+        dispatch( switchStateLight( item, active ) );
+
+    }
 
     return (
 
@@ -14,7 +24,7 @@ export const LightItem = ({ title, color }) => {
 
                 <Text style={styles.title}>{ title }</Text>
                 
-                <View style={[styles.itemColor, lightState ? styles.colorValid : styles.colorInvalid]}> 
+                <View style={[styles.itemColor, !active ? styles.colorInvalid : styles.colorValid ]}> 
                     
                 </View>
 
@@ -23,8 +33,8 @@ export const LightItem = ({ title, color }) => {
                     onColor="green"
                     offColor="gray"
                     size = "large"
-                    isOn={lightState}
-                    onToggle={() => setLightState(!lightState)}
+                    isOn={active}
+                    onToggle={ toggleSwitch }
                     style={styles.toggle}
                 />
                 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Image, FlatList } from 'react-native';
+import { View, StyleSheet, Image, FlatList, Button, Alert } from 'react-native';
 import {entries} from '../../Mocks/Entries';
 import { Entry } from '../Atoms/Entry';
 
@@ -12,7 +12,12 @@ export const HomeScreen = () => {
     return (
 
         <View style={styles.vista}>
-            <Image source={require('../../assets/images/car6.png')} style={styles.image}></Image>
+
+             <Image 
+                source={require('../../assets/images/car6.png')} 
+                style={styles.image}>            
+            </Image> 
+
             <View>
                 <FlatList
                     data={ entries }
@@ -20,6 +25,7 @@ export const HomeScreen = () => {
                     keyExtractor= {item => item.id}
                 />
             </View>
+
         </View>
   
     )
@@ -37,5 +43,5 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         justifyContent: 'center',
         width: '100%'
-    },
+    }
 })
