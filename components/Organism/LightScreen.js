@@ -1,19 +1,21 @@
 import React from 'react'
-import { View, Text, StyleSheet, FlatList, SafeAreaView } from 'react-native'
+import { View,StyleSheet, FlatList, SafeAreaView } from 'react-native'
+import { useSelector } from 'react-redux'
 import { LightItem } from '../Atoms/LightItem'
-import { lights } from '../../Mocks/LightsInfo'
 
 export const LightScreen = () => {
 
-    const renderItem = ({item}) => (
-        <LightItem title={item.title} />
+    const { lights } = useSelector(state => state.lights);
+
+    const renderItem = ({ item }) => (
+        <LightItem 
+            item={ item }
+        />
     )
 
     return (
 
         <SafeAreaView style={styles.vista}>
-
-            <Text>{'hola hola!'}</Text>
 
             <View style={styles.containerLights}>
 
@@ -23,7 +25,6 @@ export const LightScreen = () => {
                     renderItem = {renderItem}
                     keyExtractor= {item => item.id}   
                 />
-
             </View>
 
         </SafeAreaView>
