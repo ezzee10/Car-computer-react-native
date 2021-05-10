@@ -8,9 +8,12 @@ export const switchStateLight = ( item, state ) => ({
             ...item,
             active: !state
         }
-    }  
-
-    
+    },
+    meta:{
+        socket : { 
+            channel : 'chat message'
+        } , 
+    }
 });
 
 
