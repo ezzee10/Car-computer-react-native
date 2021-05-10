@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Dimensions, Text } from 'react-native'
 
 export const Battery = () => {
 
-    const [levelBattery, setLevelBattery] = useState(0);
+    const [levelBattery, setLevelBattery] = useState(50);
     const [colorBattery, setColorBattery] = useState('red');
+
+    useEffect(() => {
+        
+        levelColorBattery(levelBattery);
+
+    }, [])
 
     const levelColorBattery = ( level ) => {
 
@@ -20,7 +26,7 @@ export const Battery = () => {
     return (
 
         <View style={styles.containerBattery}>
-            <View style={[styles.battery, {backgroundColor: `${colorBattery}`} ]}> 
+            <View style={[styles.battery, {backgroundColor: `${colorBattery}`, width: `${levelBattery}%` }]}> 
             </View>      
             <Text style={styles.text}>341 km</Text>
         </View>
@@ -40,12 +46,11 @@ const styles = StyleSheet.create({
     },
     battery: {
         flexDirection: 'row',
-        color: 'white',
-        width: '30%',
+        color: 'black'
     },
     text: {
         fontSize: 25,
-        color: 'white',
+        color: 'black',
         width: '100%',
         position:'absolute',
         top: '30%',
