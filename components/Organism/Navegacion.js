@@ -1,9 +1,11 @@
 import React from 'react'
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import { LightScreen } from './components/Organism/LightScreen';
-import { HomeScreen } from './components/Organism/HomeScreen';
-import { DrivingScreen } from './components/Organism/DrivingScreen';
+import { LightScreen } from './LightScreen';
+import { HomeScreen } from './HomeScreen';
+import { DrivingScreen } from './DrivingScreen';
+import { RegisterScreen } from './RegisterScreen';
+import { LoginScreen } from './LoginScreen';
 
 export const Navegacion = () => {
 
@@ -43,6 +45,14 @@ export const Navegacion = () => {
             <Stack.Screen 
               name="conducción" 
               component={DrivingScreen} 
+            />
+            <Stack.Screen
+              name="Registro"
+              component={RegisterScreen}
+            />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>
