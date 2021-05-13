@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { useDispatch } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native'
@@ -12,34 +12,41 @@ export const LightItem = ({ item }) => {
 
     const toggleSwitch = () => {
 
-        dispatch( switchStateLight( item, active ) );
+    
+    //    mqttPublish('asdasd');
+
+       dispatch( switchStateLight( item, active ) );
+
+        // const light = {
+        //     ...item,
+        //     active: !active
+        // }
+
+        
 
     }
 
     return (
 
-        <View style={ styles.containerItem }>
     
-            <View style={styles.containItem}>
+        <View style={styles.containItem}>
 
-                <Text style={styles.title}>{ title }</Text>
-                
-                <View style={[styles.itemColor, !active ? styles.colorInvalid : styles.colorValid ]}> 
-                    
-                </View>
-
-                <ToggleSwitch 
-
-                    onColor="green"
-                    offColor="gray"
-                    size = "large"
-                    isOn={active}
-                    onToggle={ toggleSwitch }
-                    style={styles.toggle}
-                />
+            <Text style={styles.title}>{ title }</Text>
+            
+            <View style={[styles.itemColor, !active ? styles.colorInvalid : styles.colorValid ]}> 
                 
             </View>
 
+            <ToggleSwitch 
+
+                onColor="green"
+                offColor="gray"
+                size = "large"
+                isOn={active}
+                onToggle={ toggleSwitch }
+                style={styles.toggle}
+            />
+            
         </View>
 
     )
@@ -47,13 +54,6 @@ export const LightItem = ({ item }) => {
 
 const styles = StyleSheet.create({
 
-    containerItem: {
-        flexDirection: 'row',   
-        width: '50%',
-        justifyContent: 'center',
-        height: 'auto',
-        marginBottom: 30
-    },
     itemColor: {
         flexDirection: 'row',
         padding: 50,
@@ -73,8 +73,9 @@ const styles = StyleSheet.create({
         lineHeight: 20
     },
     containItem: {
-        width: '100%',
+        width: '25%',
         alignItems: 'center',
+        marginBottom: 35
     },
     toggle: {
         marginTop: 15,

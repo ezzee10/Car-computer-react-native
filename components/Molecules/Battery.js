@@ -35,14 +35,15 @@ export const Battery = () => {
 
 const styles = StyleSheet.create({
     containerBattery: {
-        width: Dimensions.get('window').width - 36,
+        width: '50%',
         flex: 1,
         borderWidth: 2,
         borderColor: '#ccc',
         borderRadius: 6,
         backgroundColor: '#7C7475',
         maxHeight: 90,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginBottom: 30
     },
     battery: {
         flexDirection: 'row',

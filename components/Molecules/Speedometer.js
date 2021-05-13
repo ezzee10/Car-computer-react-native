@@ -45,7 +45,9 @@ export const Speedometer = () => {
 const styles = StyleSheet.create({
     containSpeedometer: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 50,
+        marginBottom: 50
     },
     speedometer: {
         justifyContent: 'center',
