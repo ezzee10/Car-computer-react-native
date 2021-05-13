@@ -10,7 +10,6 @@ export const lightsReducer = ( state = initialState, action) => {
     switch (action.type) {
 
         case types.switchStateLight:
-            console.log(action.payload.light)
             return {
                 ...state,
                 lights: state.lights.map(

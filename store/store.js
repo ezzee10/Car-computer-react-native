@@ -3,11 +3,13 @@ import thunk from 'redux-thunk'
 import { lightsReducer } from '../reducers/lightsReducer';
 import io from 'socket.io-client';
 import socketIO from 'socket.io-redux';
+import { authReducer } from '../reducers/authReducer';
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 const reducers = combineReducers({
-    lights: lightsReducer
+    lights: lightsReducer,
+    auth: authReducer
 })
 
 export const store = createStore(

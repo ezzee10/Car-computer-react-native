@@ -2,16 +2,19 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Speedometer } from '../Molecules/Speedometer'
 import { Battery } from '../Molecules/Battery'
+import { LightScreen } from './LightScreen'
 
 export const DrivingScreen = () => {
 
     return (
 
         <View style={styles.containerDriving}>
-        
-            <Speedometer />
-        
+            
             <Battery />
+            
+            <Speedometer />
+    
+            <LightScreen />
 
         </View>
 

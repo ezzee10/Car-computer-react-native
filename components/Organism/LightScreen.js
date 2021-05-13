@@ -19,12 +19,16 @@ export const LightScreen = () => {
 
             <View style={styles.containerLights}>
 
-                <FlatList 
-                    data={ lights }
-                    numColumns = {2}
-                    renderItem = {renderItem}
-                    keyExtractor= {item => item.id}   
-                />
+            <FlatList
+                numColumns={3}
+                columnWrapperStyle={{ justifyContent: "space-between"}}
+                contentContainerStyle={{
+                marginTop:20 
+                }}
+                data={ lights }
+                keyExtractor={item => item.id}
+                renderItem={renderItem}
+            />
             </View>
 
         </SafeAreaView>
@@ -37,8 +41,4 @@ const styles = StyleSheet.create({
       backgroundColor: 'black',
       flex: 1
     },
-    containerLights: {
-        flexDirection: 'row', 
-        flexWrap: 'wrap'
-    }
 })
