@@ -6,6 +6,7 @@ import { HomeScreen } from './HomeScreen';
 import { DrivingScreen } from './DrivingScreen';
 import { RegisterScreen } from './RegisterScreen';
 import { LoginScreen } from './LoginScreen';
+import { ScheduleScreen } from './ScheduleScreen';
 
 export const Navegacion = () => {
 
@@ -16,7 +17,7 @@ export const Navegacion = () => {
           theme={DarkTheme}
         >
           <Stack.Navigator 
-            initialRouteName="Home"
+            initialRouteName="Agenda"
             mode="modal"
             screenOptions={{
               headerStyle: {
@@ -53,6 +54,10 @@ export const Navegacion = () => {
             <Stack.Screen
               name="Login"
               component={LoginScreen}
+            />
+            <Stack.Screen
+              name="Agenda"
+              component={ScheduleScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

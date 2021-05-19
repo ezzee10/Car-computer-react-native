@@ -21,7 +21,7 @@ export const Speedometer = () => {
             <AnimatedSpeedometer
                 size={250}
                 value={velocidad}
-                max={250}
+                max={140}
                 angle={250}
                 backgroundAngle={200}
                 indicatorStyle={{

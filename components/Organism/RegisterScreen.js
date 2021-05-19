@@ -8,7 +8,6 @@ import {
 } from 'react-native'
 import { useDispatch } from 'react-redux'
 import validator from 'validator';
-import { startRegister } from '../../actions/auth';
 import { Alert } from '../Atoms/Alert';
 
 export const RegisterScreen = () => {

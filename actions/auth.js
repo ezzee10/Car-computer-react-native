@@ -1,19 +1,19 @@
-import { types } from "../types/types"
-import { uiFinishLoading, uiStartLoading } from './ui';
+// import { types } from "../types/types"
+// import { uiFinishLoading, uiStartLoading } from './ui';
 
 
-export const startRegister = ( { user } ) => {
+// export const startRegister = ( { user } ) => {
 
-    return ( dispatch ) => {
+//     return ( dispatch ) => {
 
-         firebase.auth().signInWithPopup( googleAuthProvider)
-             .then( ({ user }) => {
-                 dispatch(
-                     login(user.uid, user.displayName)
-                 )
-            })
-     } 
-}
+//          firebase.auth().signInWithPopup( googleAuthProvider)
+//              .then( ({ user }) => {
+//                  dispatch(
+//                      login(user.uid, user.displayName)
+//                  )
+//             })
+//      } 
+// }
 
 
 // export const startGoogleLogin = () => {
