@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { LightScreen } from './LightScreen';
@@ -7,17 +7,34 @@ import { DrivingScreen } from './DrivingScreen';
 import { RegisterScreen } from './RegisterScreen';
 import { LoginScreen } from './LoginScreen';
 import { ScheduleScreen } from './ScheduleScreen';
+import { connectionMqtt } from '../../actions/mqtt';
+import { getMqtt } from '../../mqtt/Mqtt';
+import { useDispatch } from 'react-redux';
 
-export const Navegacion = () => {
+export const Router = () => {
 
     const Stack = createStackNavigator();
+
+    const dispatch = useDispatch();
+
+    let mqtt = getMqtt();
+
+    console.log(mqtt)
+
+    useEffect(() => {
+
+      dispatch(connectionMqtt(getMqtt()))
+
+      console.log('llego aca?')
+
+    }, [])
 
     return (
         <NavigationContainer
           theme={DarkTheme}
         >
           <Stack.Navigator 
-            initialRouteName="Agenda"
+            initialRouteName="Home"
             mode="modal"
             screenOptions={{
               headerStyle: {
@@ -56,7 +73,7 @@ export const Navegacion = () => {
               component={LoginScreen}
             />
             <Stack.Screen
-              name="Agenda"
+              name="agenda"
               component={ScheduleScreen}
             />
           </Stack.Navigator>

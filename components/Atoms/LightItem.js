@@ -1,29 +1,24 @@
-import React, { useContext } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
-import { useDispatch } from 'react-redux';
+import React from 'react'
+import { View, StyleSheet, Text, Image, TouchableHighlight } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux';
 import ToggleSwitch from 'toggle-switch-react-native'
 import { switchStateLight } from '../../actions/lights';
 
 export const LightItem = ({ item }) => {
 
-    const { title, active } = item;
+    const { title, active, image, imageOn } = item;
+
+    let img = active ? imageOn : image;
+
+    console.log(active)
 
     const dispatch = useDispatch();
 
+    const { mqtt }  = useSelector(state => state.mqtt.mqtt)
+
     const toggleSwitch = () => {
 
-    
-    //    mqttPublish('asdasd');
-
-       dispatch( switchStateLight( item, active ) );
-
-        // const light = {
-        //     ...item,
-        //     active: !active
-        // }
-
-        
-
+       dispatch(switchStateLight( item, active ));
     }
 
     return (
@@ -33,11 +28,18 @@ export const LightItem = ({ item }) => {
 
             <Text style={styles.title}>{ title }</Text>
             
-            <View style={[styles.itemColor, !active ? styles.colorInvalid : styles.colorValid ]}> 
+            {/* <View style={[styles.itemColor, !active ? styles.colorInvalid : styles.colorValid ]}> 
                 
-            </View>
+            </View> */}
+            <TouchableHighlight
+                onPress={toggleSwitch}
+            >
+                <Image style={styles.img} source={img} />
 
-            <ToggleSwitch 
+            </TouchableHighlight>
+            
+
+            {/* <ToggleSwitch 
 
                 onColor="green"
                 offColor="gray"
@@ -45,7 +47,7 @@ export const LightItem = ({ item }) => {
                 isOn={active}
                 onToggle={ toggleSwitch }
                 style={styles.toggle}
-            />
+            /> */}
             
         </View>
 
@@ -79,6 +81,10 @@ const styles = StyleSheet.create({
     },
     toggle: {
         marginTop: 15,
+    },
+    img: {
+        width: 100,
+        height: 100,
     }
     
 

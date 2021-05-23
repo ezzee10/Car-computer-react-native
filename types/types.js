@@ -6,6 +6,8 @@ export const types = {
     logout: '[Auth] Logout',
 
     switchStateLight: '[Light] Turn On',
-    changeSpeedometer: '[Speedometer] Change speed'
+    changeSpeedometer: '[Speedometer] Change speed',
+
+    connectionMqtt: '[MQTT] Connection'
 
 }
