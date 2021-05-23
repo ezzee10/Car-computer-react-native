@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { myqtt } from '../mqtt/Mqtt';
-import myqttContext from './myqttContext';
+// import React, { useState, useEffect } from 'react';
+// import { myqtt } from '../mqtt/Mqtt';
+// import myqttContext from './myqttContext';
 
-const MyqttState = props => {
+// const MyqttState = props => {
 
-    const [client, setClient] = useState(null);
+//     const [client, setClient] = useState(null);
 
-    useEffect(() => {
-        setClient( myqtt );
-    }, [myqtt])
+//     useEffect(() => {
+//         setClient( myqtt );
+//     }, [myqtt])
 
-    const mqttPublish = (context) => {
+//     const mqttPublish = (context) => {
 
-        console.log(context);
+//         console.log(context);
 
-        console.log(client)
+//         console.log(client)
 
-        if (client) {
+//         if (client) {
 
-          const { topic, payload } = context;
+//           const { topic, payload } = context;
 
-          //client.publish('esp/32', 'asd');
+//           //client.publish('esp/32', 'asd');
 
-        }
-    }
+//         }
+//     }
 
 
-    return (
-        <myqttContext.Provider
-            value={{
-                client,
-                setClient,
-                mqttPublish
-            }}
-            >{props.children}
-        </myqttContext.Provider>
-    )
-}
+//     return (
+//         <myqttContext.Provider
+//             value={{
+//                 client,
+//                 setClient,
+//                 mqttPublish
+//             }}
+//             >{props.children}
+//         </myqttContext.Provider>
+//     )
+// }
 
-export default MyqttState;
+// export default MyqttState;

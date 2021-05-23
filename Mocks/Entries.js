@@ -29,7 +29,7 @@ export const entries = [
     },
     {
       id: '58694a0f-3da1-471f-bd96-145571e29d732',
-      title: 'kilometraje',
+      title: 'agenda',
       icon: 'home'
     },
   ];
