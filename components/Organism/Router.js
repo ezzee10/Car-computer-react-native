@@ -3,13 +3,13 @@ import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { LightScreen } from './LightScreen';
 import { HomeScreen } from './HomeScreen';
-import { DrivingScreen } from './DrivingScreen';
 import { RegisterScreen } from './RegisterScreen';
 import { LoginScreen } from './LoginScreen';
 import { ScheduleScreen } from './ScheduleScreen';
 import { connectionMqtt } from '../../actions/mqtt';
 import { getMqtt } from '../../mqtt/Mqtt';
 import { useDispatch } from 'react-redux';
+import { DriveScreen } from './DriveScreen';
 
 export const Router = () => {
 
@@ -34,7 +34,7 @@ export const Router = () => {
           theme={DarkTheme}
         >
           <Stack.Navigator 
-            initialRouteName="Home"
+            initialRouteName="Register"
             mode="modal"
             screenOptions={{
               headerStyle: {
@@ -62,7 +62,7 @@ export const Router = () => {
             />
             <Stack.Screen 
               name="conducción" 
-              component={DrivingScreen} 
+              component={DriveScreen} 
             />
             <Stack.Screen
               name="Registro"

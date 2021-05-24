@@ -8,6 +8,8 @@ export const types = {
     switchStateLight: '[Light] Turn On',
     changeSpeedometer: '[Speedometer] Change speed',
 
-    connectionMqtt: '[MQTT] Connection'
+    connectionMqtt: '[MQTT] Connection',
+
+    carOn: '[CAR] On'
 
 }
