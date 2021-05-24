@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Image, Text, Dimensions } from 'react-native'
+import { View, StyleSheet, Text} from 'react-native'
 import AnimatedSpeedometer from 'react-native-cool-speedometer'
-
 
 export const Speedometer = () => {
 
-    const [velocidad, setVelocidad] = useState(0);
+    const [velocidad, setVelocidad] = useState(false);
+
 
     useEffect(() => {
         const interval = setInterval(() => {
-        setVelocidad(velocidad => velocidad + 10);
-        }, 150);
+        let RandomNumber = Math.floor((Math.random() * (140 - 1 + 1)) + 1);
+        setVelocidad(velocidad => RandomNumber);
+        }, 200);
         return () => clearInterval(interval);
     }, []);
+
 
     return (
 
@@ -46,8 +48,7 @@ const styles = StyleSheet.create({
     containSpeedometer: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 50,
-        marginBottom: 50
+        flexDirection: 'row'
     },
     speedometer: {
         justifyContent: 'center',
