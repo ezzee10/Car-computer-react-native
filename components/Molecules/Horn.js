@@ -2,17 +2,26 @@ import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Pressable, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 
 export const Horn = ({ hornState , iconOn, iconOff, colorOff, colorOn, size, style }) => {
 
     const [pressed, setPressed] = useState(0);
 
+    let { mqtt } = useSelector(state => state.mqtt);
+
+    const onHorn = ( state ) => {
+        
+        setPressed( state );
+        mqtt.publish('esp/bocina', Buffer.from(JSON.stringify(state), "utf8"))
+    }
+
     console.log(pressed)
 
 
     return (
-        <Pressable onPressIn={() => setPressed(true)} onPressOut={() => setPressed(false)} style={style}>
+        <Pressable onPressIn={() => onHorn(true)} onPressOut={() => onHorn(false)} style={style}>
             <Icon style={styles.icon} name={`${ hornState || pressed ? iconOn : iconOff }`} size={size} color={`${ hornState || pressed ? colorOn : colorOff}`} />   
         </Pressable>
     )

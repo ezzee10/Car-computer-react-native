@@ -9,6 +9,8 @@ export const carReducer = ( state = initialState, action) => {
     switch (action.type) {
 
         case types.carOn:
+
+            console.log(action.payload);
             return {
                 carOn: action.payload
             }

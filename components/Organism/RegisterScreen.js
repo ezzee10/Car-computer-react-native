@@ -6,13 +6,20 @@ import {
   Text,
   TouchableHighlight
 } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import validator from 'validator';
+import { startRegister } from '../../actions/register';
 import { Alert } from '../Atoms/Alert';
+import { useNavigation } from '@react-navigation/native';
+
 
 export const RegisterScreen = () => {
 
   const dispatch = useDispatch();
+
+  const navigation = useNavigation();
+
+  const { mqtt } = useSelector(state => state.mqtt)
 
   const [register, setRegister] = useState({
     name: '', surname: '', email:'', password: '', password2: ''
@@ -20,7 +27,7 @@ export const RegisterScreen = () => {
 
   const { name, surname, email, password, password2 } = register;
 
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState({ msg:'', type:'' });
 
   const onChangeText = (key, val) => {
       setRegister({...register,  [key]: val })
@@ -29,25 +36,26 @@ export const RegisterScreen = () => {
   const isFormValid = () => {
       
     if ( name.trim().length === 0 ) { 
-        setError('El nombre es requerido');
+        setMessage({type: 'error', msg:'El nombre es requerido'});
         return false;
     } else if ( surname.trim().length === 0 ) {
-      setError( 'El apellido es requerido');
+      setMessage({type: 'error', msg:'El apellido es requerido'});
         return false;
     } else if ( !validator.isEmail( email ) ) {
-        setError('El email es inválido');
+        setMessage({type: 'error', msg:'El email es inválido'});
+        return false;
+    } else if ( password.length < 6 ) {
+        setMessage({type: 'error', msg:'La contraseña debe tener 6 caracteres como mínimo'});
         return false;
     } else if ( password !== password2 || password.length < 6 ) {
-        setError('Las contraseñas deben coincidir');
-        return false;
+      setMessage({type: 'error', msg:'Las contraseñas deben coincidir'});
+      return false;
     }
     return true;
 
   }
 
   const handleRegister = () => {
-
-    console.log('entre')
 
     if( isFormValid() ) {
 
@@ -57,8 +65,12 @@ export const RegisterScreen = () => {
           email,
           password,
         }
-
+        mqtt.publish('user/register', Buffer.from(JSON.stringify(user), "utf8"));
         dispatch( startRegister( user ) );
+        setMessage({type: 'success', msg:'Usuario registrado correctamente'});
+
+        navigation.navigate('Login');
+        
     }
 
   }
@@ -67,7 +79,7 @@ export const RegisterScreen = () => {
   return (
       <View style={styles.container}>
 
-      { error ? <Alert message= {error } /> : null }
+      { message ? <Alert message= { message } /> : null }
 
       <TextInput
         style={[styles.input]}

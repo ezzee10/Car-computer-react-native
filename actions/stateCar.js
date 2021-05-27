@@ -1,7 +1,14 @@
 import {types} from '../types/types';
 
-export const switchStateCar = ( state ) => ({
+export const switchStateCar = ( state ) => { 
 
-    type: types.carOn,
-    payload: state
-});
+    if (state) {
+        console.log(state);
+    }
+
+    return {
+        type: types.carOn,
+        payload: 12
+    }
+
+}

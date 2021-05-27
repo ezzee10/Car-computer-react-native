@@ -1,53 +1,9 @@
-// import { types } from "../types/types"
-// import { uiFinishLoading, uiStartLoading } from './ui';
+import {types} from '../types/types';
 
+export const login = ( state ) => ({
 
-// export const startRegister = ( { user } ) => {
+    type: types.login,
+    payload: state
+});
 
-//     return ( dispatch ) => {
-
-//          firebase.auth().signInWithPopup( googleAuthProvider)
-//              .then( ({ user }) => {
-//                  dispatch(
-//                      login(user.uid, user.displayName)
-//                  )
-//             })
-//      } 
-// }
-
-
-// export const startGoogleLogin = () => {
-//     return ( dispatch ) => {
-
-//         firebase.auth().signInWithPopup( googleAuthProvider)
-//             .then( ({ user }) => {
-//                 dispatch(
-//                     login(user.uid, user.displayName)
-//                 )
-//             })
-//     }
-// }
-
-
-// export const login = (uid, displayName) => ({
-//     type: types.login,
-//     payload: {
-//         uid,
-//         displayName
-//     }  
-// })
-
-// export const startLogout = () => {
-    
-//     return async ( dispatch ) => {
-//         await firebase.auth().signOut();
-
-//         dispatch(logout() );
-//     }
-
-// }
-
-// export const logout = () => ({
-//     type: types.logout
-// })
 
