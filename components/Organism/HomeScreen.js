@@ -15,14 +15,17 @@ export const HomeScreen = () => {
 
     const dispatch = useDispatch();
 
+    let { mqtt } = useSelector(state => state.mqtt);
+
     let { carOn } = useSelector(state => state.carOn);
     
     const handleStartCar = () => {
-        console.log('llego aca')
+
+        mqtt.publish('esp/contacto', Buffer.from(JSON.stringify(!carOn), "utf8"))
         dispatch(switchStateCar(!carOn))
+        
     }
 
-    console.log(carOn)
    
     return (
 

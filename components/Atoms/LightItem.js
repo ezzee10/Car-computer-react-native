@@ -11,11 +11,20 @@ export const LightItem = ({ item }) => {
 
     const dispatch = useDispatch();
 
-    const { mqtt }  = useSelector(state => state.mqtt.mqtt)
+    const { mqtt }  = useSelector(state => state.mqtt)
 
     const toggleSwitch = () => {
 
        dispatch(switchStateLight( item, active ));
+
+       let itemCopy = item;
+       delete itemCopy.id;
+       delete itemCopy.image;
+       delete itemCopy.imageOn;
+       delete itemCopy.title;
+
+       mqtt.publish(`esp/luces/${itemCopy.titleMqtt}`, Buffer.from(JSON.stringify(!active), "utf8"))
+       console.log(mqtt)
     }
 
     return (

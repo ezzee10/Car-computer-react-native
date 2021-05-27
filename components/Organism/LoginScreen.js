@@ -8,17 +8,17 @@ import {
 } from 'react-native'
 import { useDispatch } from 'react-redux';
 import { Alert } from '../Atoms/Alert';
+import { useNavigation } from '@react-navigation/native';
 
 export const LoginScreen = () => {
 
     const dispatch = useDispatch();
+    const navigation = useNavigation();
+    const [error, setError] = useState('');
 
     const [login, setLogin] = useState({
         email: '', password: ''
     })
-
-
-    const [error, setError] = useState('');
 
     const onChangeText = (key, val) => {
         setRegister({...register,  [key]: val })
@@ -36,6 +36,13 @@ export const LoginScreen = () => {
         dispatch( startLogin( user ) );
         
     }
+
+    const handleRegister = () => {
+      
+      navigation.navigate('Registro');
+
+    }
+    
 
     return (
 
@@ -64,6 +71,13 @@ export const LoginScreen = () => {
         onPress={handleLogin}
       >
         <Text style={styles.appButtonText}>Iniciar Sesión</Text>
+      </TouchableHighlight> 
+
+      <TouchableHighlight 
+        style={{marginTop: 50}}
+        onPress={handleRegister}
+      >
+        <Text style={styles.appButtonText}>Registrarse</Text>
       </TouchableHighlight> 
 
     </View>

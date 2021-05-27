@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Text} from 'react-native'
 import AnimatedSpeedometer from 'react-native-cool-speedometer'
+import { useSelector } from 'react-redux';
 
 export const Speedometer = () => {
 
     const [velocidad, setVelocidad] = useState(false);
 
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-        let RandomNumber = Math.floor((Math.random() * (140 - 1 + 1)) + 1);
-        setVelocidad(velocidad => RandomNumber);
-        }, 200);
-        return () => clearInterval(interval);
-    }, []);
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         let RandomNumber = Math.floor( ( Math.random() * (140 - 1 + 1)) + 1 );
+    //         setVelocidad( RandomNumber );
+    //     }, 200);
+    //     return () => clearInterval( interval );
+    // }, []);
+
+    // let { mqtt } = useSelector(state => state.mqtt);
 
 
     return (

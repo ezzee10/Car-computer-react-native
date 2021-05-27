@@ -10,6 +10,8 @@ export const types = {
 
     connectionMqtt: '[MQTT] Connection',
 
-    carOn: '[CAR] On'
+    carOn: '[CAR] On',
+
+    userRegister: '[Register]'
 
 }

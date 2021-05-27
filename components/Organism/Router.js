@@ -8,7 +8,7 @@ import { LoginScreen } from './LoginScreen';
 import { ScheduleScreen } from './ScheduleScreen';
 import { connectionMqtt } from '../../actions/mqtt';
 import { getMqtt } from '../../mqtt/Mqtt';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { DriveScreen } from './DriveScreen';
 
 export const Router = () => {
@@ -17,24 +17,27 @@ export const Router = () => {
 
     const dispatch = useDispatch();
 
-    let mqtt = getMqtt();
+    const { logged } = useSelector(state => state.auth);
 
-    console.log(mqtt)
+    let mqtt = getMqtt();
 
     useEffect(() => {
 
-      dispatch(connectionMqtt(getMqtt()))
+      const interval = setInterval(() => {
 
-      console.log('llego aca?')
-
-    }, [])
+          if(mqtt.connected) {
+            dispatch(connectionMqtt(mqtt));
+            clearInterval(interval);
+          }
+      }, 200);
+    }, [mqtt])
 
     return (
         <NavigationContainer
           theme={DarkTheme}
         >
           <Stack.Navigator 
-            initialRouteName="Register"
+            initialRouteName={ !logged ? 'Home' : 'Login'}
             mode="modal"
             screenOptions={{
               headerStyle: {

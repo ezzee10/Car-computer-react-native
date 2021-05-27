@@ -47,24 +47,6 @@ export const ScheduleScreen = () => {
   };
   
 
-  const handleRegister = () => {
-
-    console.log('entre')
-
-    if( isFormValid() ) {
-
-        const user = {
-          name,
-          surname,
-          email,
-          password,
-        }
-
-        dispatch( startRegister( user ) );
-    }
-
-  }
-
 
   return (
       <View style={styles.container}>
