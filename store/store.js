@@ -11,7 +11,7 @@ const reducers = combineReducers({
     lights: lightsReducer,
     auth: authReducer,
     mqtt: mqttReducer,
-    carOn: carReducer,
+    carStatus: carReducer,
     userRegister: registerReducer
 })
 

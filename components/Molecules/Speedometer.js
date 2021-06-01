@@ -5,19 +5,17 @@ import { useSelector } from 'react-redux';
 
 export const Speedometer = () => {
 
-    const [velocidad, setVelocidad] = useState(false);
+    // const { velocity } = useSelector(state => state.carStatus)
 
+    const [velocity, setVelocidad ] = useState(0);
 
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         let RandomNumber = Math.floor( ( Math.random() * (140 - 1 + 1)) + 1 );
-    //         setVelocidad( RandomNumber );
-    //     }, 200);
-    //     return () => clearInterval( interval );
-    // }, []);
-
-    // let { mqtt } = useSelector(state => state.mqtt);
-
+    useEffect(() => {
+        const interval = setInterval(() => {
+            let RandomNumber = Math.floor( ( Math.random() * (140 - 1 + 1)) + 1 );
+            setVelocidad( RandomNumber );
+        }, 200);
+        return () => clearInterval( interval );
+    }, []);
 
     return (
 
@@ -25,7 +23,7 @@ export const Speedometer = () => {
 
             <AnimatedSpeedometer
                 size={250}
-                value={velocidad}
+                value={velocity}
                 max={140}
                 angle={250}
                 backgroundAngle={200}

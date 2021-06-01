@@ -12,7 +12,7 @@ export const DriveScreen = () => {
 
     const [beacon, setBeacon ] = useState(false);
 
-    const [beaconMqtt, setBeaconMqtt] = useState(false);
+    const [beaconMqtt, setBeaconMqtt] = useState(true);
 
     const [lightRight, setLightRight] = useState(false);
 
@@ -20,7 +20,7 @@ export const DriveScreen = () => {
 
     const [horn, setHorn] = useState(false);
 
-    const { carOn } = useSelector(state => state.carOn)
+    const { active } = useSelector(state => state.carStatus)
 
     useEffect(() => {
 
@@ -37,6 +37,9 @@ export const DriveScreen = () => {
         setBeacon(false);
     
     }, [beaconMqtt])
+
+    console.log('hola');
+
 
     return (
 
@@ -56,6 +59,7 @@ export const DriveScreen = () => {
                     size={100}
                 />
                 
+        
                 <Speedometer />
 
                 <TurningLight 
@@ -70,20 +74,24 @@ export const DriveScreen = () => {
 
             </View>
 
-            <Horn 
-                hornState = { horn }
-                iconOn = 'megaphone'
-                iconOff = 'megaphone-outline'
-                colorOff = 'red'
-                colorOn = 'red'
-                size={100}
-                style={styles.horn}
-            />
+            <View style={{flexDirection: 'row', marginBottom: 30, marginTop: 30}}>
 
-            <PositionLight 
-                style={styles.positionLight}
-                state = { carOn}
-            />
+                <Horn 
+                    hornState = { horn }
+                    iconOn = 'megaphone'
+                    iconOff = 'megaphone-outline'
+                    colorOff = 'red'
+                    colorOn = 'red'
+                    size={100}
+                    style={styles.horn}
+                />
+
+                <PositionLight 
+                    style={styles.positionLight}
+                    state = {active}
+                />
+
+            </View>
     
             <LightScreen />
 
@@ -107,7 +115,8 @@ const styles = StyleSheet.create({
         marginBottom: 30
     },
     horn: {
-        marginBottom: 30
+        marginBottom: 30,
+        marginRight: 50
     },
     positionLight: {
         width: 100,

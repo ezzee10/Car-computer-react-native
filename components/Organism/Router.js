@@ -11,7 +11,7 @@ import { getMqtt } from '../../mqtt/Mqtt';
 import { useDispatch, useSelector } from 'react-redux';
 import { DriveScreen } from './DriveScreen';
 
-export const Router = () => {
+export const Router = ({ store }) => {
 
     const Stack = createStackNavigator();
 
@@ -19,7 +19,7 @@ export const Router = () => {
 
     const { logged } = useSelector(state => state.auth);
 
-    let mqtt = getMqtt();
+    let mqtt = getMqtt(store);
 
     useEffect(() => {
 
