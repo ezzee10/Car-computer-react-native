@@ -7,7 +7,7 @@ const App = () => {
   
   return (
     <Provider store={store}>
-        <Router/> 
+        <Router store={store}/> 
     </Provider>
   );
 };

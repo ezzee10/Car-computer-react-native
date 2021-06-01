@@ -17,12 +17,14 @@ export const HomeScreen = () => {
 
     let { mqtt } = useSelector(state => state.mqtt);
 
-    let { carOn } = useSelector(state => state.carOn);
+    let { active } = useSelector(state => state.carStatus);
+
+    let asd = useSelector(state => state.carStatus);
     
     const handleStartCar = () => {
 
-        mqtt.publish('esp/contacto', Buffer.from(JSON.stringify(!carOn), "utf8"))
-        dispatch(switchStateCar(!carOn))
+        mqtt.publish('esp/contacto', Buffer.from(JSON.stringify(!active), "utf8"))
+        dispatch(switchStateCar(!active))
         
     }
 
@@ -38,9 +40,9 @@ export const HomeScreen = () => {
 
             <View style={styles.power}>
                 <TouchableHighlight onPress={handleStartCar}>
-                    <Icon style={styles.icon} name="power-off" size={100} color={carOn ? 'green' : 'red'} />
+                    <Icon style={styles.icon} name="power-off" size={100} color={active ? 'green' : 'red'} />
                 </TouchableHighlight>
-                <Text style={styles.text}>{carOn ? 'Apagar vehículo': 'Encender vehículo'}</Text>
+                <Text style={styles.text}>{active ? 'Apagar vehículo': 'Encender vehículo'}</Text>
             </View>
 
             <View style={styles.list}>
