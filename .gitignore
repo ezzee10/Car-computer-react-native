@@ -64,4 +64,4 @@ buck-out/
 secrets.js
 .watchmanconfig
 .prettierrc.js
-
+app.json
