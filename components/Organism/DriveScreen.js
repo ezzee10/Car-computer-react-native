@@ -12,7 +12,7 @@ export const DriveScreen = () => {
 
     const [beacon, setBeacon ] = useState(false);
 
-    const [beaconMqtt, setBeaconMqtt] = useState(true);
+    const [beaconMqtt, setBeaconMqtt] = useState(false);
 
     const [lightRight, setLightRight] = useState(false);
 
@@ -38,7 +38,7 @@ export const DriveScreen = () => {
     
     }, [beaconMqtt])
 
-    console.log('hola');
+    console.log('holaaa');
 
 
     return (

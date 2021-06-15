@@ -10,6 +10,8 @@ import { connectionMqtt } from '../../actions/mqtt';
 import { getMqtt } from '../../mqtt/Mqtt';
 import { useDispatch, useSelector } from 'react-redux';
 import { DriveScreen } from './DriveScreen';
+import {UbicationScreen} from './UbicationScreen';
+
 
 export const Router = ({ store }) => {
 
@@ -37,7 +39,7 @@ export const Router = ({ store }) => {
           theme={DarkTheme}
         >
           <Stack.Navigator 
-            initialRouteName={ !logged ? 'Home' : 'Login'}
+            initialRouteName={ !logged ? 'ubicacion' : 'Login'}
             mode="modal"
             screenOptions={{
               headerStyle: {
@@ -78,6 +80,10 @@ export const Router = ({ store }) => {
             <Stack.Screen
               name="agenda"
               component={ScheduleScreen}
+            />
+            <Stack.Screen
+              name="ubicacion"
+              component={UbicationScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

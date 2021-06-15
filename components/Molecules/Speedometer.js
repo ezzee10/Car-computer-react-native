@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Text} from 'react-native'
 import AnimatedSpeedometer from 'react-native-cool-speedometer'
+import { color } from 'react-native-reanimated';
 import { useSelector } from 'react-redux';
 
 export const Speedometer = () => {
@@ -20,6 +21,8 @@ export const Speedometer = () => {
     return (
 
         <View style={styles.containSpeedometer}>
+
+            {/* <View><Text style={{color: 'white'}}>{velocity}</Text></View> */}
 
             <AnimatedSpeedometer
                 size={250}

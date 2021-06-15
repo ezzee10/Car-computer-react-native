@@ -3,7 +3,8 @@ import { View, StyleSheet, Image, FlatList, Text, TouchableHighlight} from 'reac
 import {entries} from '../../Mocks/Entries';
 import { Entry } from '../Atoms/Entry';
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { switchStateCar } from '../../actions/stateCar';
+import Icons from 'react-native-vector-icons/Ionicons'
+import { switchStateCar, changeStateDoors } from '../../actions/stateCar';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -17,15 +18,18 @@ export const HomeScreen = () => {
 
     let { mqtt } = useSelector(state => state.mqtt);
 
-    let { active } = useSelector(state => state.carStatus);
+    let { active, doors } = useSelector(state => state.carStatus);
 
-    let asd = useSelector(state => state.carStatus);
-    
     const handleStartCar = () => {
 
         mqtt.publish('esp/contacto', Buffer.from(JSON.stringify(!active), "utf8"))
         dispatch(switchStateCar(!active))
         
+    }
+
+    const handleDoors = () => {
+        mqtt.publish('esp/puertas', Buffer.from(JSON.stringify(!doors), "utf8"))
+        dispatch(changeStateDoors(!doors))
     }
 
    
@@ -38,11 +42,22 @@ export const HomeScreen = () => {
                 style={styles.image}>            
             </Image> 
 
-            <View style={styles.power}>
-                <TouchableHighlight onPress={handleStartCar}>
-                    <Icon style={styles.icon} name="power-off" size={100} color={active ? 'green' : 'red'} />
-                </TouchableHighlight>
-                <Text style={styles.text}>{active ? 'Apagar vehículo': 'Encender vehículo'}</Text>
+            <View style={styles.containerIcons}>
+
+                <View style={styles.containerIcon}>
+                    <TouchableHighlight onPress={handleStartCar}>
+                        <Icon style={styles.icon} name="power-off" size={100} color={active ? 'green' : 'red'} />
+                    </TouchableHighlight>
+                    <Text style={styles.text}>{active ? 'Apagar vehículo': 'Encender vehículo'}</Text>
+                </View>
+
+                <View style={styles.containerIcon}>
+                    <TouchableHighlight onPress={handleDoors}>
+                        <Icons style={styles.icon} name={doors ? 'lock-open-outline' : 'lock-closed-outline' } size={100} color={doors ? 'green' : 'red'} />
+                    </TouchableHighlight>
+                    <Text style={styles.text}>{doors ? 'Cerrar puertas': 'Abrir puertas'}</Text>
+                </View>
+
             </View>
 
             <View style={styles.list}>
@@ -72,10 +87,14 @@ const styles = StyleSheet.create({
     icon: {
         textAlign: 'center'
     },
-    power: {
+    containerIcon: {
         justifyContent:'center',
         position: 'relative',
-        top: -30
+        top: -30,
+        marginRight: 50
+    },
+    'containerIcon:last-child': {
+        marginRight: 0
     },
     text: {
         color:'white',
@@ -84,5 +103,9 @@ const styles = StyleSheet.create({
     },
     list: {
         flex: 1
+    },
+    containerIcons: {
+        flexDirection: 'row',
+        justifyContent: 'center'
     }
 })
