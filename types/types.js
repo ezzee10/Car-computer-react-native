@@ -14,6 +14,8 @@ export const types = {
 
     userRegister: '[Register]',
 
-    speedometer : '[Speedometer]'
+    speedometer : '[Speedometer]',
+
+    doors: '[DOORS]'
 
 }

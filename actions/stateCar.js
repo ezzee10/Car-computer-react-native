@@ -10,3 +10,8 @@ export const changeSpeedometer = ( velocity ) => ({
     type: types.speedometer,
     payload: velocity
 })
+
+export const changeStateDoors = ( state ) => ({
+    type: types.doors,
+    payload: state
+})
