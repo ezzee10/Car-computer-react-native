@@ -4,6 +4,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import MapViewDirections from 'react-native-maps-directions';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import config from '../../config';
 
 export const UbicationScreen = () => {
 
@@ -39,9 +40,6 @@ export const UbicationScreen = () => {
     map.current.animateToRegion(initialRegion, 2000);
     
   }
-
-  console.log(location)
-
 
   useEffect(() => {
         Geolocation.getCurrentPosition(
@@ -90,7 +88,7 @@ export const UbicationScreen = () => {
               }}
               strokeWidth = {3}
               strokeColor = "hotpink"
-              apikey={'AIzaSyAKUqY51pE1ja6bmTNTsQ5KJOPBwvBWZZc'}
+              apikey={config.GOOGLE_API_KEY}
             />
 
           </MapView>
@@ -131,7 +129,7 @@ export const UbicationScreen = () => {
                     return ""; 
                   }}
                 query={{
-                    key: "AIzaSyAKUqY51pE1ja6bmTNTsQ5KJOPBwvBWZZc",
+                    key: config.GOOGLE_API_KEY,
                     language: "es", 
                     components: "country:ar",
                     }}
