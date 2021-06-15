@@ -57,3 +57,11 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+.env.development
+.flowconfig
+.eslintrc.js
+secrets.js
+.watchmanconfig
+.prettierrc.js
+
