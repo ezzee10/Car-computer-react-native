@@ -15,7 +15,17 @@ export const types = {
     userRegister: '[Register]',
 
     speedometer : '[Speedometer]',
+    doors: '[DOORS]',
+    odometer: '[ODOMETER]',
+    battery: '[BATTERY]',
 
-    doors: '[DOORS]'
+    switchLeftTurn: '[LeftTurn]',
+    switchRightTurn: '[RigthTurn]',
+
+    //SAVE STORAGE
+
+    saveOdometer: '[SaveOdometer]'
+
+
 
 }

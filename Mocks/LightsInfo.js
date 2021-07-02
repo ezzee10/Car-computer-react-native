@@ -44,4 +44,12 @@ export const lightsInfo = [
     //   title: 'Luz de freno',
     //   active: false
     // },
+    {
+      id: '58694a0f-3da1-471f-bd96-145571313221e293d725',
+      title: 'Baliza',
+      active: false,
+      image: require('../assets/images/dashboard/image6.png'),
+      imageOn: require('../assets/images/dashboard/image6-on.png'),
+      titleMqtt: 'baliza'
+    },
 ];

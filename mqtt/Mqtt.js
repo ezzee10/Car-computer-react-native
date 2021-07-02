@@ -1,10 +1,12 @@
-import React from 'react'
 import * as Mqtt from 'react-native-native-mqtt';
-import { changeSpeedometer, switchStateCar } from '../actions/stateCar';
+import { switchLeftTurn, switchRigthTurn } from '../actions/lights';
+import { changeBattery, changeSpeedometer, changeStateOdometer } from '../actions/stateCar';
+import { lightsInfo } from '../Mocks/LightsInfo';
+import { store } from '../store/store';
 
 global.Buffer = global.Buffer || require('buffer').Buffer
 
-export const getMqtt = (store) => {
+export const getMqtt = () => {
 
     const mqttClient = new Mqtt.Client('wss://zc482089.en.emqx.cloud:8084/mqtt');
    
@@ -15,18 +17,26 @@ export const getMqtt = (store) => {
         timeout: 500,
     }, err => {err});
 
-    console.log(store)
-    
     mqttClient.on(Mqtt.Event.Message,(topic, message) => {
 
-        console.log(topic, message);
+        console.log(topic, message.toString());
 
         switch (topic) {
-            // case 'esp/contacto':
-            //     store.dispatch(switchStateCar(!!message));
-            //     break;
+            case 'esp/odometer':
+                store.dispatch(changeStateOdometer(parseInt(message.toString())));
+                break;
             case 'esp/velocimetro':
-                store.dispatch(changeSpeedometer(parseInt(message.toString())))
+                store.dispatch(changeSpeedometer(parseInt(message.toString())));
+                break;
+            case 'esp/bateria':
+                store.dispatch(changeBattery(parseInt(message.toString())));
+                break;
+            case 'app/giroIzquierdo':
+                store.dispatch(switchLeftTurn(parseInt(message.toString())));
+                break;
+            case 'app/giroDerecho':
+                store.dispatch(switchRigthTurn(parseInt(message.toString())));
+                break;
             default:
                 break;
         }
@@ -34,13 +44,19 @@ export const getMqtt = (store) => {
     
     mqttClient.on(Mqtt.Event.Connect, () => {
         console.log('MQTT Connect');
-        mqttClient.subscribe(['user/register'], [0])
-        mqttClient.subscribe(['esp/contacto'], [0])
         mqttClient.subscribe(['esp/bocina'], [0])
         mqttClient.subscribe(['esp/luces/baja'], [0])
+        mqttClient.subscribe(['esp/luces/baliza'], [0])
         mqttClient.subscribe(['esp/velocimetro'], [0])
+        mqttClient.subscribe(['esp/odometer'], [0])
+        mqttClient.subscribe(['esp/bateria'], [0])
+        mqttClient.subscribe(['app/giroIzquierdo'], [0])
+        mqttClient.subscribe(['app/giroDerecho'], [0])
+        mqttClient.subscribe(['app/abrirPuertas'], [0])
         // const Buffer = require("buffer").Buffer;
         // mqttClient.publish('esp/led', Buffer.from("Probando aplicacion", "utf8") , 0, false);
+
+        // store.dispatch(connectionMqtt(mqttClient));
     });
     
     mqttClient.on(Mqtt.Event.Error, (error) => {

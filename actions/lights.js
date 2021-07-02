@@ -11,5 +11,17 @@ export const switchStateLight = ( item, state ) => ({
     }
 });
 
+export const switchLeftTurn = ( state ) => ({
+
+    type: types.switchLeftTurn,
+    payload: state
+});
+
+export const switchRigthTurn = ( state ) => ({
+
+    type: types.switchRightTurn,
+    payload: state
+});
+
 
 

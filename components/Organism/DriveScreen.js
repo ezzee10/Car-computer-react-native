@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import { Speedometer } from '../Molecules/Speedometer'
 import { Battery } from '../Molecules/Battery'
 import { LightScreen } from './LightScreen'
@@ -7,51 +7,80 @@ import { TurningLight } from '../Molecules/TurningLight'
 import { Horn } from '../Molecules/Horn'
 import { PositionLight } from '../Molecules/PositionLight'
 import { useSelector } from 'react-redux'
+import { Odometer } from '../Molecules/Odometer'
 
 export const DriveScreen = () => {
-
-    const [beacon, setBeacon ] = useState(false);
-
-    const [beaconMqtt, setBeaconMqtt] = useState(false);
 
     const [lightRight, setLightRight] = useState(false);
 
     const [lightLeft, setLightLeft] = useState(false);
 
-    const [horn, setHorn] = useState(false);
+    const [beacon, setBeacon ] = useState(false); 
 
-    const { active } = useSelector(state => state.carStatus)
+    const { active, odometer, velocity, battery } = useSelector(state => state.carStatus);
+
+    const beaconRedux = useSelector(state => state.lights.lights[4].active); 
+
+    const lightLeftRedux = useSelector(state => state.lights.leftTurn);
+    
+    const lightRightRedux = useSelector(state => state.lights.rightTurn);
 
     useEffect(() => {
 
-        if( beaconMqtt ) {
-
-            const interval = setInterval(() => {
+        if( beaconRedux) {
+            setBeacon(beacon => !beacon);
+            const interval2 = setInterval(() => {
                 setBeacon(beacon => !beacon);
-                }, 1000);
-
-            return () => clearInterval(interval);
-        
+            }, 1000);
+            return () => clearInterval(interval2);
+        }else {
+            setBeacon(false);
         }
+    }, [beaconRedux]);
 
-        setBeacon(false);
-    
-    }, [beaconMqtt])
+    useEffect(() => {
 
-    console.log('holaaa');
+        if( lightRightRedux && !beaconRedux ) {
+            setLightRight(lightRight => !lightRight);
+            const interval = setInterval(() => {
+                setLightRight(lightRight => !lightRight);
+            }, 1000);
+            return () => clearInterval(interval);
+        } else {
+            setLightRight(false);
+        }
+    }, [lightRightRedux, beaconRedux])
 
+    useEffect(() => {
+
+        if( lightLeftRedux && !beaconRedux ) {
+            setLightLeft(lightLeft => !lightLeft);
+            const interval = setInterval(() => {
+                setLightLeft(lightLeft => !lightLeft);
+            }, 1000);
+            return () => clearInterval(interval);
+        } else {
+            setLightLeft(false);
+        }
+    }, [lightLeftRedux, beaconRedux])
 
     return (
 
         <View style={styles.containerDriving}>
             
-            <Battery />
+            <Battery 
+                levelBattery={battery}
+            />
 
+            <Odometer 
+                kms={odometer}
+            />
+            
             <View style={styles.containerTop}>
 
                 <TurningLight 
                     beaconState = { beacon }
-                    lightLeftState = { lightLeft }
+                    lightState = { lightLeft }
                     iconOn = 'arrow-undo'
                     iconOff = 'arrow-undo-outline'
                     colorOff = 'white'
@@ -60,11 +89,13 @@ export const DriveScreen = () => {
                 />
                 
         
-                <Speedometer />
+                <Speedometer 
+                    velocity = {velocity}
+                />
 
                 <TurningLight 
                     beaconState = { beacon }
-                    lightLeftState = { lightRight }
+                    lightState = { lightRight }
                     iconOn = 'arrow-redo'
                     iconOff = 'arrow-redo-outline'
                     colorOff = 'white'
@@ -77,7 +108,6 @@ export const DriveScreen = () => {
             <View style={{flexDirection: 'row', marginBottom: 30, marginTop: 30}}>
 
                 <Horn 
-                    hornState = { horn }
                     iconOn = 'megaphone'
                     iconOff = 'megaphone-outline'
                     colorOff = 'red'

@@ -16,10 +16,6 @@ export const Horn = ({ hornState , iconOn, iconOff, colorOff, colorOn, size, sty
         setPressed( state );
         mqtt.publish('esp/bocina', Buffer.from(JSON.stringify(state), "utf8"))
     }
-
-    console.log(pressed)
-
-
     return (
         <Pressable onPressIn={() => onHorn(true)} onPressOut={() => onHorn(false)} style={style}>
             <Icon style={styles.icon} name={`${ hornState || pressed ? iconOn : iconOff }`} size={size} color={`${ hornState || pressed ? colorOn : colorOff}`} />   

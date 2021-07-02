@@ -1,34 +1,25 @@
-import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Dimensions, Text } from 'react-native'
+import React from 'react'
+import { View, StyleSheet, Text } from 'react-native'
 
-export const Battery = () => {
-
-    const [levelBattery, setLevelBattery] = useState(50);
-    const [colorBattery, setColorBattery] = useState('red');
-
-    useEffect(() => {
-        
-        levelColorBattery(levelBattery);
-
-    }, [])
+export const Battery = ( { levelBattery }) => {
 
     const levelColorBattery = ( level ) => {
 
         if ( level > 50 ) {
-            setColorBattery('green');
+            return 'green';
         } else if ( level <= 50 && level >= 25 ) {
-            setColorBattery('yellow');
+            return 'yellow';
         } else {
-            setColorBattery('red');
+            return 'red';
         }
     }
 
     return (
 
         <View style={styles.containerBattery}>
-            <View style={[styles.battery, {backgroundColor: `${colorBattery}`, width: `${levelBattery}%` }]}> 
+            <View style={[styles.battery, {backgroundColor: `${levelColorBattery(levelBattery)}`, width: `${ levelBattery }%` }]}> 
             </View>      
-            <Text style={styles.text}>341 km</Text>
+            <Text style={styles.text}> { levelBattery } %</Text>
         </View>
     )
 }

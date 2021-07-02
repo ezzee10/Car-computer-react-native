@@ -1,30 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { View, StyleSheet, Text} from 'react-native'
 import AnimatedSpeedometer from 'react-native-cool-speedometer'
-import { color } from 'react-native-reanimated';
-import { useSelector } from 'react-redux';
 
-export const Speedometer = () => {
-
-    // const { velocity } = useSelector(state => state.carStatus)
-
-    const [velocity, setVelocidad ] = useState(0);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            let RandomNumber = Math.floor( ( Math.random() * (140 - 1 + 1)) + 1 );
-            setVelocidad( RandomNumber );
-        }, 200);
-        return () => clearInterval( interval );
-    }, []);
-
+export const Speedometer = ({ velocity }) => {
+    
     return (
 
         <View style={styles.containSpeedometer}>
 
-            {/* <View><Text style={{color: 'white'}}>{velocity}</Text></View> */}
+            <View><Text style={{color: 'white', fontSize: 20}}>{velocity}</Text></View>
 
-            <AnimatedSpeedometer
+            
+
+            {/* <AnimatedSpeedometer
                 size={250}
                 value={velocity}
                 max={140}
@@ -42,7 +30,7 @@ export const Speedometer = () => {
                     color: 'white'
                 }}
                 secondaryArcColor = {'gray'}
-            /> 
+            />  */}
 
         </View>
     )
