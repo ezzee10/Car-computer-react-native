@@ -4,7 +4,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import MapViewDirections from 'react-native-maps-directions';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import config from '../../config';
+import variables from '../../variables';
 
 export const UbicationScreen = () => {
 
@@ -88,7 +88,7 @@ export const UbicationScreen = () => {
               }}
               strokeWidth = {3}
               strokeColor = "hotpink"
-              apikey={config.GOOGLE_API_KEY}
+              apikey={variables.GOOGLE_API_KEY}
             />
 
           </MapView>
@@ -129,7 +129,7 @@ export const UbicationScreen = () => {
                     return ""; 
                   }}
                 query={{
-                    key: config.GOOGLE_API_KEY,
+                    key: variables.GOOGLE_API_KEY,
                     language: "es", 
                     components: "country:ar",
                     }}

@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icons from 'react-native-vector-icons/Ionicons'
 import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -15,12 +15,12 @@ export const Entry = ({title, subtitle, iconName}) => {
 
   return (
       <View style={styles.entry}>
-        <Icon style={styles.iconLeft} name={iconName} size={30}/>
+        <Icons style={styles.iconLeft} name={iconName} size={30}/>
         <View style={styles.containerInfo}>
           <Text style={styles.entryName}>{title}</Text>
           { subtitle ? <Text style={styles.entrySubtitle}>{subtitle}</Text> : null }
         </View>
-        <Icon name={'arrow-right'} style={styles.iconRight} onPress={ ()=> renderNewScreen (title) }/> 
+        <Icons name={'arrow-forward-outline'} style={styles.iconRight} onPress={ ()=> renderNewScreen (title) }/> 
       </View>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { LightScreen } from './LightScreen';
@@ -7,21 +7,19 @@ import { RegisterScreen } from './RegisterScreen';
 import { LoginScreen } from './LoginScreen';
 import { ScheduleScreen } from './ScheduleScreen';
 import { connectionMqtt } from '../../actions/mqtt';
-import { getMqtt } from '../../mqtt/Mqtt';
 import { useDispatch, useSelector } from 'react-redux';
 import { DriveScreen } from './DriveScreen';
 import {UbicationScreen} from './UbicationScreen';
+import { getMqtt } from '../../mqtt/Mqtt';
+import { ExitScreen } from './ExitScreen';
 
-
-export const Router = ({ store }) => {
+export const Router = ({ logged }) => {
 
     const Stack = createStackNavigator();
 
     const dispatch = useDispatch();
 
-    const { logged } = useSelector(state => state.auth);
-
-    let mqtt = getMqtt(store);
+    let mqtt = getMqtt();
 
     useEffect(() => {
 
@@ -30,16 +28,21 @@ export const Router = ({ store }) => {
           if(mqtt.connected) {
             dispatch(connectionMqtt(mqtt));
             clearInterval(interval);
+            console.log(mqtt);
           }
       }, 200);
     }, [mqtt])
+
+    // const { logged } = useSelector(state => state.auth);
+
+    console.log(logged);
 
     return (
         <NavigationContainer
           theme={DarkTheme}
         >
-          <Stack.Navigator 
-            initialRouteName={ !logged ? 'ubicacion' : 'Login'}
+          <Stack.Navigator
+            initialRouteName={ logged ? 'Home' : 'Login'}
             mode="modal"
             screenOptions={{
               headerStyle: {
@@ -82,8 +85,12 @@ export const Router = ({ store }) => {
               component={ScheduleScreen}
             />
             <Stack.Screen
-              name="ubicacion"
+              name="ubicación"
               component={UbicationScreen}
+            />
+            <Stack.Screen
+              name="salir"
+              component={ExitScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

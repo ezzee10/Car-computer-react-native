@@ -1,55 +1,66 @@
 import React, { useState } from 'react'
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Text,
-  TouchableHighlight
-} from 'react-native'
-import { useDispatch } from 'react-redux';
+import { View, TextInput, StyleSheet, Text, TouchableHighlight } from 'react-native'
 import { Alert } from '../Atoms/Alert';
 import { useNavigation } from '@react-navigation/native';
+import { clienteAxios } from '../../config/config';
+import CheckBox from '@react-native-community/checkbox';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const LoginScreen = () => {
 
-    const dispatch = useDispatch();
     const navigation = useNavigation();
-    const [error, setError] = useState('');
+
+    const [message, setMessage] = useState({ msg:'', type:'' });
 
     const [login, setLogin] = useState({
         email: '', password: ''
     })
 
+    const [toggleCheckBox, setToggleCheckBox] = useState(false)
+
     const onChangeText = (key, val) => {
-        setRegister({...register,  [key]: val })
+      setLogin({...login,  [key]: val });
     }
 
-    const handleLogin = () => {
+    const {email, password } = login;
 
-        console.log('entre')
+    const handleLogin = async () => {
 
         if (email.trim() === '' || password.trim() === '') {
-            setError('Todos los campos son obligatorios');
+            setMessage({type: 'Error', msg: 'Todos los campos son obligatorios'});
             return;
         }
-    
-        dispatch( startLogin( user ) );
+
+        const user_login = {
+          username : email,
+          password
+        }
+
+        try {
+
+          const token = await clienteAxios.post('/conductors/login', user_login);
+          setMessage({type: 'success', msg:'Usuario logueado correctamente'});
+
+          if (toggleCheckBox) {
+            delete user_login.password;
+            user_login.token = token.data.data;
+            await AsyncStorage.setItem('user-token', JSON.stringify(token));
+          }
         
-    }
+          setTimeout(() => {
+            navigation.navigate('Home');
+          }, 300);
 
-    const handleRegister = () => {
-      
-      navigation.navigate('Registro');
-
+        } catch (error) {
+          console.log(error);  
+        }      
     }
-    
 
     return (
 
       <View style={styles.container}>
 
-      { error ? <Alert message= {error } /> : null }
-
+      { message ? <Alert message= { message } /> : null }
 
       <TextInput
         style={[styles.input]}
@@ -66,6 +77,13 @@ export const LoginScreen = () => {
         onChangeText={ data => onChangeText('password', data) }
         secureTextEntry={true}
       />
+      <View style={styles.checkboxContainer}>
+        <CheckBox
+            value={toggleCheckBox}
+            onValueChange={(newValue) => setToggleCheckBox(newValue)}
+          />
+        <Text style={styles.checkboxText}>Recordar usuario</Text>
+      </View>
       <TouchableHighlight 
         style ={styles.submit}
         onPress={handleLogin}
@@ -75,7 +93,7 @@ export const LoginScreen = () => {
 
       <TouchableHighlight 
         style={{marginTop: 50}}
-        onPress={handleRegister}
+        onPress={()=> navigation.navigate('Registro')}
       >
         <Text style={styles.appButtonText}>Registrarse</Text>
       </TouchableHighlight> 
@@ -86,7 +104,7 @@ export const LoginScreen = () => {
 
 const styles = StyleSheet.create({
     input: {
-      width: '50%',
+      width: '70%',
       height: 55,
       backgroundColor: 'black',
       margin: 30,
@@ -109,7 +127,7 @@ const styles = StyleSheet.create({
     submit: {
       backgroundColor: 'black',
       marginTop: 30,
-      width: '40%',
+      width: '70%',
       height: 50,
       flexDirection: 'row',
       justifyContent: 'center',
@@ -120,7 +138,6 @@ const styles = StyleSheet.create({
       borderColor: 'gray',
       paddingTop: 10,
       paddingBottom: 10,
-      
     },
     appButtonText: {
       color: 'white',
@@ -129,5 +146,14 @@ const styles = StyleSheet.create({
       position: 'relative',
       top: -2,
       textTransform: 'uppercase'
+    },
+    checkboxContainer: {
+      flexDirection: 'row',
+      alignItems: 'center'
+    },
+    checkboxText: {
+      color: 'white',
+      marginLeft: 12,
+      fontSize: 16
     }
 })

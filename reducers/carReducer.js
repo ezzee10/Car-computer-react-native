@@ -3,7 +3,9 @@ import { types } from '../types/types'
 const initialState = {
     active: false,
     velocity: 0,
-    doors: false
+    doors: false,
+    odometer: 0,
+    battery: 0
 }
 
 export const carReducer = ( state = initialState, action) => {
@@ -18,12 +20,22 @@ export const carReducer = ( state = initialState, action) => {
         case types.speedometer:
             return{
                 ...state,
-                velocity: action.payload
+                velocity: state.velocity + action.payload
             }
         case types.doors:
             return{
                 ...state,
                 doors: action.payload
+            }
+        case types.odometer:
+            return{
+                ...state,
+                odometer: state.odometer + action.payload
+            }
+        case types.battery:
+            return{
+                ...state,
+                battery: action.payload
             }
         default:
             return state;

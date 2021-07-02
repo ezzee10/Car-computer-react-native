@@ -1,25 +1,14 @@
 import React, { useState } from 'react'
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Text,
-  TouchableHighlight
-} from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { View, TextInput, StyleSheet, Text, TouchableHighlight } from 'react-native'
 import validator from 'validator';
-import { startRegister } from '../../actions/register';
 import { Alert } from '../Atoms/Alert';
 import { useNavigation } from '@react-navigation/native';
+import { clienteAxios } from '../../config/config';
 
 
 export const RegisterScreen = () => {
 
-  const dispatch = useDispatch();
-
   const navigation = useNavigation();
-
-  const { mqtt } = useSelector(state => state.mqtt)
 
   const [register, setRegister] = useState({
     name: '', surname: '', email:'', password: '', password2: ''
@@ -31,6 +20,12 @@ export const RegisterScreen = () => {
 
   const onChangeText = (key, val) => {
       setRegister({...register,  [key]: val })
+  }
+
+  const deleteForm = () => {
+    setRegister({
+      name: '', surname: '', email: '', password: '', password2: ''
+    })
   }
 
   const isFormValid = () => {
@@ -52,29 +47,35 @@ export const RegisterScreen = () => {
       return false;
     }
     return true;
-
   }
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
 
     if( isFormValid() ) {
 
         const user = {
-          name,
-          surname,
-          email,
-          password,
+          nombre: name,
+          apellido: surname,
+          username: email,
+          password: password,
+          recorrido: {}
         }
-        mqtt.publish('user/register', Buffer.from(JSON.stringify(user), "utf8"));
-        dispatch( startRegister( user ) );
-        setMessage({type: 'success', msg:'Usuario registrado correctamente'});
 
-        navigation.navigate('Login');
-        
+        try {
+          await clienteAxios.post('/conductors', user);
+          console.log('llego aca?')
+          setMessage({type: 'success', msg:'Usuario registrado correctamente'});
+          setTimeout(() => {
+            navigation.navigate('Login');
+          }, 1000);
+          deleteForm();
+
+        } catch (error) {
+          console.log(error);  
+        }
+ 
     }
-
   }
-
 
   return (
       <View style={styles.container}>
@@ -126,6 +127,13 @@ export const RegisterScreen = () => {
         <Text style={styles.appButtonText}>Crear nueva cuenta</Text>
       </TouchableHighlight> 
 
+      <TouchableHighlight 
+        style ={styles.submit}
+        onPress={()=> navigation.navigate('Login')}
+      >
+        <Text style={styles.appButtonText}>Volver al login</Text>
+      </TouchableHighlight> 
+
     </View>
   )
 }
@@ -166,7 +174,6 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     paddingTop: 10,
     paddingBottom: 10,
-    
   },
   appButtonText: {
     color: 'white',

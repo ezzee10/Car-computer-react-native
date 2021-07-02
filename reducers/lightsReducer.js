@@ -2,13 +2,14 @@ import { types } from '../types/types'
 import { lightsInfo } from '../Mocks/LightsInfo'
 
 const initialState = {
-    lights: lightsInfo
+    lights: lightsInfo,
+    leftTurn: false,
+    rightTurn: false
 }
 
 export const lightsReducer = ( state = initialState, action) => {
 
     switch (action.type) {
-
         case types.switchStateLight:
             return {
                 ...state,
@@ -17,6 +18,16 @@ export const lightsReducer = ( state = initialState, action) => {
                         ? action.payload.light
                         : light
                 )
+            }
+        case types.switchLeftTurn:
+            return {
+                ...state,
+                leftTurn: action.payload == 1 ? true : false
+            }
+        case types.switchRightTurn:
+            return {
+                ...state,
+                rightTurn: action.payload == 1 ? true : false
             }
         default:
             return state;

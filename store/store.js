@@ -4,6 +4,7 @@ import { authReducer } from '../reducers/authReducer';
 import { mqttReducer } from '../reducers/mqttReducer';
 import { carReducer } from '../reducers/carReducer';
 import { registerReducer } from '../reducers/registerReducer';
+import { userReducer } from '../reducers/userReducer';
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
@@ -12,7 +13,8 @@ const reducers = combineReducers({
     auth: authReducer,
     mqtt: mqttReducer,
     carStatus: carReducer,
-    userRegister: registerReducer
+    userRegister: registerReducer,
+    user: userReducer
 })
 
 export const store = createStore(

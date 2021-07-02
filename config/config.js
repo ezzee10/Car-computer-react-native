@@ -1,7 +1,6 @@
 import axios from 'axios';
+import variables from '../variables';
 
-const clienteAxios = axios.create({
-    baseURL: process.env.REACT_APP_BACKEND_URL
+export const clienteAxios = axios.create({
+    baseURL: variables.REACT_APP_BACKEND_URL
 });
-
-export default clienteAxios;

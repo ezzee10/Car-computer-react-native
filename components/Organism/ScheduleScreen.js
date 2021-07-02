@@ -124,7 +124,7 @@ export const ScheduleScreen = () => {
 
         <TouchableHighlight 
           style ={[styles.button, styles.save]}
-          onPress={handleRegister}
+          // onPress={handleRegister}
         >
           <Text style={styles.appButtonText}>GUARDAR</Text>
         </TouchableHighlight> 
