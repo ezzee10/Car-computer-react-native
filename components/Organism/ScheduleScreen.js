@@ -45,6 +45,32 @@ export const ScheduleScreen = () => {
     setShow3(Platform.OS === 'ios');
     setDate3(currentDate);
   };
+
+  // const handleRegister = async () => {
+
+  //   if( isFormValid() ) {
+
+  //       const note = {
+  //         date: name,
+  //         apellido: surname,
+  //         username: email,
+  //         password: password,
+  //         recorrido: {}
+  //       }
+
+  //       try {
+  //         await clienteAxios.post('/conductors', user);
+  //         setMessage({type: 'success', msg:'Usuario registrado correctamente'});
+  //         setTimeout(() => {
+  //           navigation.navigate('Login');
+  //         }, 1000);
+  //         deleteForm();
+
+  //       } catch (error) {
+  //         console.log(error);  
+  //       }
+ 
+  //   }
   
 
 

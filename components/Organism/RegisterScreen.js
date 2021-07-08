@@ -54,16 +54,14 @@ export const RegisterScreen = () => {
     if( isFormValid() ) {
 
         const user = {
-          nombre: name,
-          apellido: surname,
-          username: email,
-          password: password,
-          recorrido: {}
+          name,
+          surname,
+          email,
+          password
         }
 
         try {
-          await clienteAxios.post('/conductors', user);
-          console.log('llego aca?')
+          await clienteAxios.post('/api/driver', user);
           setMessage({type: 'success', msg:'Usuario registrado correctamente'});
           setTimeout(() => {
             navigation.navigate('Login');

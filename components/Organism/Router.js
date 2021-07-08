@@ -33,10 +33,6 @@ export const Router = ({ logged }) => {
       }, 200);
     }, [mqtt])
 
-    // const { logged } = useSelector(state => state.auth);
-
-    console.log(logged);
-
     return (
         <NavigationContainer
           theme={DarkTheme}
