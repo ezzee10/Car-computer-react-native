@@ -22,6 +22,12 @@ export const LoginScreen = () => {
       setLogin({...login,  [key]: val });
     }
 
+    const deleteForm = () => {
+      setLogin({
+        email: '', password: ''
+      })
+    }
+
     const {email, password } = login;
 
     const handleLogin = async () => {
@@ -32,13 +38,13 @@ export const LoginScreen = () => {
         }
 
         const user_login = {
-          username : email,
+          email,
           password
         }
 
         try {
 
-          const token = await clienteAxios.post('/conductors/login', user_login);
+          const token = await clienteAxios.post('/api/auth', user_login);
           setMessage({type: 'success', msg:'Usuario logueado correctamente'});
 
           if (toggleCheckBox) {
@@ -49,10 +55,12 @@ export const LoginScreen = () => {
         
           setTimeout(() => {
             navigation.navigate('Home');
-          }, 300);
+            setMessage({type: '', msg: ''});
+          }, 1000);
 
         } catch (error) {
           console.log(error);  
+          setMessage({type: 'error', msg:'Usuario o contraseña incorrecta'});
         }      
     }
 

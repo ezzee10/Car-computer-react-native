@@ -26,7 +26,6 @@ const App = () => {
   const getLogged = async () => {
     try {
       const value = await AsyncStorage.getItem('user-token');
-      console.log(value);
       if(value !== null) {
         setLogged(true);
         setLoaded(false);
