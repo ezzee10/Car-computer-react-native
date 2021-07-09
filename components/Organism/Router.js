@@ -12,6 +12,7 @@ import { DriveScreen } from './DriveScreen';
 import {UbicationScreen} from './UbicationScreen';
 import { getMqtt } from '../../mqtt/Mqtt';
 import { ExitScreen } from './ExitScreen';
+import { clienteAxios } from '../../config/config';
 
 export const Router = ({ logged }) => {
 

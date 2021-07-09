@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { clienteAxios } from '../../config/config';
 import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import tokenAuth from '../../config/tokenAuth';
 
 export const LoginScreen = () => {
 
@@ -45,12 +46,13 @@ export const LoginScreen = () => {
         try {
 
           const token = await clienteAxios.post('/api/auth', user_login);
+          console.log(token.data.token);
           setMessage({type: 'success', msg:'Usuario logueado correctamente'});
 
+          tokenAuth(token.data.token);
+
           if (toggleCheckBox) {
-            delete user_login.password;
-            user_login.token = token.data.data;
-            await AsyncStorage.setItem('user-token', JSON.stringify(token));
+            await AsyncStorage.setItem('user-token', token.data.token);
           }
         
           setTimeout(() => {

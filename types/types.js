@@ -22,6 +22,10 @@ export const types = {
     switchLeftTurn: '[LeftTurn]',
     switchRightTurn: '[RigthTurn]',
 
+    updateNotes: '[UpdateNotes]',
+
+    loadNote: '[LoadNote]',
+
     //SAVE STORAGE
 
     saveOdometer: '[SaveOdometer]'
