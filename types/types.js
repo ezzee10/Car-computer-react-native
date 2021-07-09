@@ -24,7 +24,7 @@ export const types = {
 
     updateNotes: '[UpdateNotes]',
 
-    loadNote: '[LoadNote]',
+    loadNote: '[loadNote]',
 
     //SAVE STORAGE
 
