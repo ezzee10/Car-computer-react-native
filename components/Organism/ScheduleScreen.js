@@ -32,7 +32,7 @@ export const ScheduleScreen = () => {
 
     // dispatch(loadNote(note));
     
-  }, [])
+  }, [getNote])
 
   const onChange1 = (event, selectedDate) => {
     const currentDate = selectedDate || date;

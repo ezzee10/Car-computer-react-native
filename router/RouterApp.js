@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
-import { LightScreen } from './LightScreen';
-import { HomeScreen } from './HomeScreen';
-import { RegisterScreen } from './RegisterScreen';
-import { LoginScreen } from './LoginScreen';
-import { ScheduleScreen } from './ScheduleScreen';
-import { connectionMqtt } from '../../actions/mqtt';
-import { useDispatch, useSelector } from 'react-redux';
-import { DriveScreen } from './DriveScreen';
-import {UbicationScreen} from './UbicationScreen';
-import { getMqtt } from '../../mqtt/Mqtt';
-import { ExitScreen } from './ExitScreen';
-import { clienteAxios } from '../../config/config';
+import { LightScreen } from '../components/Organism/LightScreen';
+import { HomeScreen } from '../components/Organism/HomeScreen';
+import { RegisterScreen } from '../components/Organism/RegisterScreen';
+import { LoginScreen } from '../components/Organism/LoginScreen';
+import { ScheduleScreen } from '../components/Organism/ScheduleScreen';
+import { connectionMqtt } from '../actions/mqtt';
+import { useDispatch } from 'react-redux';
+import { DriveScreen } from '../components/Organism/DriveScreen';
+import {UbicationScreen} from '../components/Organism/UbicationScreen';
+import { getMqtt } from '../mqtt/Mqtt';
+import { ExitScreen } from '../components/Organism/ExitScreen';
 
-export const Router = ({ logged }) => {
+const RouterApp = ({ logged }) => {
 
     const Stack = createStackNavigator();
 
@@ -93,3 +92,5 @@ export const Router = ({ logged }) => {
         </NavigationContainer>
     )
 }
+
+export default RouterApp
