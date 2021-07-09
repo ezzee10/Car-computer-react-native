@@ -6,6 +6,7 @@ import { Router } from './components/Organism/Router';
 import SpinningImage from 'react-native-spinning-image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {LogBox} from 'react-native';
+import tokenAuth from './config/tokenAuth';
 LogBox.ignoreAllLogs();
 
 
@@ -25,8 +26,9 @@ const App = () => {
 
   const getLogged = async () => {
     try {
-      const value = await AsyncStorage.getItem('user-token');
-      if(value !== null) {
+      const token = await AsyncStorage.getItem('user-token');
+      tokenAuth(token);
+      if(token !== null) {
         setLogged(true);
         setLoaded(false);
       } else {
