@@ -22,9 +22,11 @@ export const types = {
     switchLeftTurn: '[LeftTurn]',
     switchRightTurn: '[RigthTurn]',
 
-    updateNotes: '[UpdateNotes]',
-
+    createNote: '[createNote]',
+    updateNote: '[updateNote]',
     loadNote: '[loadNote]',
+    setMessageNote: '[setMessageNote]',
+    showAlert: '[showAlert]',
 
     //SAVE STORAGE
 
