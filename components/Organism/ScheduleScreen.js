@@ -1,38 +1,30 @@
-import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Text, TouchableHighlight } from 'react-native'
-import { useDispatch } from 'react-redux'
-import DateTimePicker from '@react-native-community/datetimepicker';
+import React, { useState } from 'react'
+import { View, StyleSheet, Text, TouchableHighlight, ScrollView } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import {convertDate} from '../../helpers/convertDate';
-import { clienteAxios } from '../../config/config';
-import { loadNote } from '../../actions/notes';
+import { createNote, updateNote } from '../../actions/notes';
+import AwesomeAlert from 'react-native-awesome-alerts';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export const ScheduleScreen = () => {
 
   const dispatch = useDispatch();
 
-  const [message, setMessage] = useState({ msg:'', type:'' });
+  const { note, message, alert } = useSelector(state => state.note);
 
-  const [date, setDate1] = useState(null);
+  const [showAlert, setShowAlert ] = useState(alert);
 
-  const [date2, setDate2] = useState(null)
+  const [date, setDate1] = useState(note?.vtv ? new Date(note.vtv) : null);
 
-  const [date3, setDate3] = useState(null)
+  const [date2, setDate2] = useState(note?.fireExtinguisher ? new Date(note.fireExtinguisher) : null);
+
+  const [date3, setDate3] = useState(note?.battery ? new Date(note.battery) : null);
 
   const [showDatePicker1, setShow1] = useState(false);
 
   const [showDatePickerTwo, setShow2] = useState(false);
 
   const [showDatePickerThree, setShow3] = useState(false);
-
-  useEffect(() => {
-    
-    let note = getNote();
-
-    console.log(note);
-
-    // dispatch(loadNote(note));
-    
-  }, [getNote])
 
   const onChange1 = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -53,41 +45,28 @@ export const ScheduleScreen = () => {
     setDate3(currentDate);
   };
 
-  const saveNote = async ( note ) => {
+  const handleRegister = () => {
 
-    try {
-      await clienteAxios.post('/api/notes', note);
-      setMessage({ type: 'success', msg:'Datos guardados correctamente' });
-    } catch (error) {
-      console.log(error);  
-    }
-
-  }
-
-  const getNote = async () => {
-
-    try {
-      const notes = await clienteAxios.get('/api/notes');
-      console.log(notes.data.note[0]);
-    } catch (error) {
-      console.log(error);  
-    }
-
-    return notes.data.note;
-  }
-
-  const handleRegister = async () => {
-
-    const note = {
-      vtv: date,
+    const new_note = {
+      vtv : date,
       fireExtinguisher: date2,
       battery: date3,
     }
 
-    saveNote( note );
+    if (note === undefined ) {
+      if (date !== null && date2 !== null && date3 !== null) {
+        dispatch(createNote(new_note));
+        setShowAlert(true);
+      }
+    } else {
+        dispatch(updateNote(new_note));
+        setShowAlert(true);
+    }
   }
-  
+
   return (
+    <ScrollView>
+
       <View style={styles.container}>
 
         {date ?
@@ -180,7 +159,22 @@ export const ScheduleScreen = () => {
           <Text style={styles.appButtonText}>GUARDAR</Text>
         </TouchableHighlight> 
 
-    </View>
+        <AwesomeAlert
+          show={true}
+          title="Agenda"
+          message={message}
+          closeOnTouchOutside={false}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="Aceptar"
+          confirmButtonColor="#DD6B55"
+          onConfirmPressed={() => {
+            setShowAlert(false);
+          }}
+        />
+
+      </View>
+    </ScrollView>
   )
 }
 
@@ -227,7 +221,7 @@ const styles = StyleSheet.create({
   },
   save: {
     width: '70%',
-    marginTop: 50
+    marginTop: 0
   },
   data: {
     color: 'yellow'
