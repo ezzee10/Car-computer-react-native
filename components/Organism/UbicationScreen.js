@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, Text, View } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import Geolocation from 'react-native-geolocation-service';
-import MapViewDirections from 'react-native-maps-directions';
+import { StyleSheet, Text, View } from "react-native";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { useSelector } from "react-redux";
+import MapViewDirections from 'react-native-maps-directions';
+import Geolocation from 'react-native-geolocation-service';
+import Geocoder from 'react-native-geocoding';
 import variables from '../../variables';
+import geocodingFormat from "../../helpers/geocodingFormat";
+import { clienteAxios } from "../../config/config";
 
 export const UbicationScreen = () => {
 
@@ -12,8 +16,10 @@ export const UbicationScreen = () => {
   const map = useRef();
 
   useEffect(() => {
-    // ref.current?.setAddressText('Some Text');
+    Geocoder.init(variables.GOOGLE_API_KEY, {language : "es"});
   }, []);
+
+  const { odometer } = useSelector(state => state.carStatus)
 
   const [location, setLocation] = useState({
     loaded: false,
@@ -26,20 +32,22 @@ export const UbicationScreen = () => {
     longitudeDelta: 0.0421,
   });
 
-  const {loaded, latitude, longitude, listViewDisplayed, currentLat, currentLng, latitudeDelta, longitudeDelta, address} = location;
+  const {loaded, latitude, longitude, listViewDisplayed, currentLat, currentLng, latitudeDelta, longitudeDelta } = location;
 
   const gotoLocation = () => {
-
     let initialRegion  = {
       longitude,
       latitude,
       latitudeDelta: 0.005,
       longitudeDelta: 0.005
     }
-
     map.current.animateToRegion(initialRegion, 2000);
-    
   }
+
+  const [kmsTravelStart, setKmsTravelStart] = useState(0);
+  const [dateTravelStart, setDateTravelStart] = useState(null);
+  const [originPlace, setOriginPlace] = useState('');
+  const [destinationPlace, setDestinationPlace] = useState('');
 
   useEffect(() => {
         Geolocation.getCurrentPosition(
@@ -53,6 +61,37 @@ export const UbicationScreen = () => {
             { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
         );
   }, [loaded])
+
+  const startTravel = async () => {
+    setKmsTravelStart(odometer);
+    setDateTravelStart(new Date());
+
+    try {
+      const response = await Geocoder.from(latitude, longitude);  
+      setOriginPlace(geocodingFormat(response));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const saveTravel = async () => {
+
+    try {
+      const response = await Geocoder.from(currentLat, currentLng);
+      let travel = {
+        kilometresTravel: Math.abs(odometer - kmsTravelStart),
+        originPlace: originPlace,
+        destinationPlace: geocodingFormat(response),
+        dateOriginPlace: dateTravelStart,
+        dateDestinationPlace: new Date()
+      }
+      setKmsTravelStart(0);
+      await clienteAxios.post('/api/travel', travel);
+      console.log(travel);
+    } catch (error) {
+      console.log(error);
+    } 
+  }
 
   return (
 
@@ -89,8 +128,13 @@ export const UbicationScreen = () => {
               strokeWidth = {3}
               strokeColor = "hotpink"
               apikey={variables.GOOGLE_API_KEY}
+              onReady = { result =>  {
+                console.log(result.distance);
+                if(result.distance <= 0.1) {
+                  saveTravel();
+                }
+              }}
             />
-
           </MapView>
 
           <View style={[styles.panelHeader,
@@ -117,6 +161,7 @@ export const UbicationScreen = () => {
                           currentLat: details.geometry.location.lat,
                           currentLng: details.geometry.location.lng,
                     }),
+                    startTravel();
                     gotoLocation();
                   }}
                 textInputProps={{
@@ -156,21 +201,12 @@ export const UbicationScreen = () => {
               filterReverseGeocodingByTypes={[
                   "locality","administrative_area_level_3",]} 
               debounce={200}/>
-          
           </View>
-      
       </View>
-        
         :
-
         <Text>No se encontró la ubicación</Text>
-
       }
-
     </View>
-    
-
-
   );
 }
 

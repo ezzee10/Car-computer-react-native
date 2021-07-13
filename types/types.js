@@ -28,6 +28,8 @@ export const types = {
     setMessageNote: '[setMessageNote]',
     showAlert: '[showAlert]',
 
+    saveTravel: '[saveTravel]',
+
     //SAVE STORAGE
 
     saveOdometer: '[SaveOdometer]'
