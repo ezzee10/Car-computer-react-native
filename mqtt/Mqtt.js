@@ -19,7 +19,7 @@ export const getMqtt = () => {
 
     mqttClient.on(Mqtt.Event.Message,(topic, message) => {
 
-        console.log(topic, message.toString());
+        // console.log(topic, message.toString());
 
         switch (topic) {
             case 'esp/odometer':
