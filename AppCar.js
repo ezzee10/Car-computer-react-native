@@ -7,6 +7,8 @@ import { store } from './store/store';
 import { AppState } from "react-native";
 import { startLoadingNote } from './actions/notes';
 import { useDispatch } from 'react-redux';
+import { startLoadingKms } from './actions/stateCar';
+import { clienteAxios } from './config/config';
 
 const AppCar = () => {
 
@@ -29,6 +31,7 @@ const AppCar = () => {
       const token = await AsyncStorage.getItem('user-token');
       tokenAuth(token);
       dispatch(startLoadingNote());
+      dispatch(startLoadingKms());
       if(token !== null) {
         setLogged(true);
       } else {
@@ -56,11 +59,11 @@ const AppCar = () => {
     if ( appState.current.match(/active/)) {
       return;
     } else {  
-      let object = {
-        odometer: store.getState().carStatus.odometer
+      try {
+        await clienteAxios.put('/api/vehicle', {kilometresTotal: store.getState().carStatus.odometer});
+      } catch (error) {
+        console.log(error);
       }
-      await AsyncStorage.setItem('user', JSON.stringify(object));
-      const value = await AsyncStorage.getItem('user');
     }
   };
 
