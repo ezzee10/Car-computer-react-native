@@ -3,7 +3,6 @@ import { clienteAxios } from '../config/config';
 
 export const startLoadingNote = () => {
     return async( dispatch ) => {
-        console.log('entro aca');
         const result =  await clienteAxios.get('/api/notes');
         dispatch({type: types.loadNote, payload: result.data.note[0]});
     }

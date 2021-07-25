@@ -17,6 +17,7 @@ export const types = {
     speedometer : '[Speedometer]',
     doors: '[DOORS]',
     odometer: '[ODOMETER]',
+    loadOdometer: '[loadOdometer]',
     battery: '[BATTERY]',
 
     switchLeftTurn: '[LeftTurn]',
