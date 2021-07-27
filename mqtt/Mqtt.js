@@ -1,7 +1,6 @@
 import * as Mqtt from 'react-native-native-mqtt';
 import { switchLeftTurn, switchRigthTurn } from '../actions/lights';
-import { changeBattery, changeSpeedometer, changeStateOdometer } from '../actions/stateCar';
-import { lightsInfo } from '../Mocks/LightsInfo';
+import { changeBattery, changeSeltBelt, changeSpeedometer, changeStateOdometer } from '../actions/stateCar';
 import { store } from '../store/store';
 
 global.Buffer = global.Buffer || require('buffer').Buffer
@@ -37,6 +36,8 @@ export const getMqtt = () => {
             case 'app/giroDerecho':
                 store.dispatch(switchRigthTurn(parseInt(message.toString())));
                 break;
+            case 'app/alerta':
+                store.dispatch(changeSeltBelt(message.toString()));
             default:
                 break;
         }
@@ -52,7 +53,7 @@ export const getMqtt = () => {
         mqttClient.subscribe(['esp/bateria'], [0])
         mqttClient.subscribe(['app/giroIzquierdo'], [0])
         mqttClient.subscribe(['app/giroDerecho'], [0])
-        mqttClient.subscribe(['app/abrirPuertas'], [0])
+        mqttClient.subscribe(['app/alerta'], [0])
         // const Buffer = require("buffer").Buffer;
         // mqttClient.publish('esp/led', Buffer.from("Probando aplicacion", "utf8") , 0, false);
 

@@ -38,7 +38,6 @@ const AppCar = () => {
         setLogged(false);
       }
       setLoaded(false);
-      console.log(loaded);
     } catch(e) {
       console.log(e);
     }
@@ -80,8 +79,6 @@ const AppCar = () => {
             />
         : 
             <RouterApp logged={logged} />  
-    
-
         )   
 }
 

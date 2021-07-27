@@ -33,3 +33,13 @@ export const startLoadingKms = () => {
         }  
     }
 };
+
+export const changeSeltBelt = ( message ) => ({
+    type: types.seatBelt,
+    payload: message
+})
+
+export const changeShowSeltBelt = ( state ) => ({
+    type: types.changeShowSeltBelt,
+    payload: state
+})

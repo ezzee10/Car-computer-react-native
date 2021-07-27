@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {convertDate} from '../../helpers/convertDate';
 import { createNote, updateNote } from '../../actions/notes';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import DialogInput from 'react-native-dialog-input';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export const ScheduleScreen = () => {
@@ -20,11 +21,19 @@ export const ScheduleScreen = () => {
 
   const [date3, setDate3] = useState(note?.battery ? new Date(note.battery) : null);
 
+  const [wheels, setWheels] = useState(note?.wheels ? note.wheels : 100000);
+
+  const [transmission, setTransmission] = useState(note?.transmission ? note.transmission : 15000);
+
   const [showDatePicker1, setShow1] = useState(false);
 
   const [showDatePickerTwo, setShow2] = useState(false);
 
   const [showDatePickerThree, setShow3] = useState(false);
+
+  const [showDialog1, setShowDialog1] = useState(false);
+
+  const [showDialog2, setShowDialog2] = useState(false);
 
   const onChange1 = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -51,6 +60,8 @@ export const ScheduleScreen = () => {
       vtv : date,
       fireExtinguisher: date2,
       battery: date3,
+      wheels: wheels,
+      transmission: transmission
     }
 
     if (note === undefined ) {
@@ -122,9 +133,45 @@ export const ScheduleScreen = () => {
 
         </TouchableHighlight> 
 
-        <Text style={styles.label}>La rotación de cubiertas deberá realizarse dentro de <Text style={styles.data}>100000 km</Text></Text>
+        <Text style={styles.label}>La rotación de cubiertas deberá realizarse dentro de <Text style={styles.data}>{wheels} km</Text></Text>
 
-        <Text style={styles.label}>El chequeo de transmisión deberá realizarse dentro de <Text style={styles.data}>15000 km</Text></Text>
+        <TouchableHighlight 
+          style ={styles.button}
+          onPress={() => setShowDialog1(true)}
+        >
+          <Text style={styles.appButtonText}> Modificar </Text>
+
+        </TouchableHighlight> 
+
+        <DialogInput isDialogVisible={showDialog1}
+            title={"Rotación de cubiertas"}
+            message={"Cantidad de kilómetros para rotación de cubiertas"}
+            submitInput={ (inputText) => {setWheels(inputText), setShowDialog1(false)} }
+            closeDialog={ () => setShowDialog1(false)}
+            submitText={"Enviar"}
+            cancelText={"Cancelar"}
+        >
+        </DialogInput>
+
+        <Text style={styles.label}>El chequeo de transmisión deberá realizarse dentro de <Text style={styles.data}>{transmission} km</Text></Text>
+
+        <TouchableHighlight 
+          style ={styles.button}
+          onPress={() => setShowDialog2(true)}
+        >
+          <Text style={styles.appButtonText}> Modificar </Text>
+
+        </TouchableHighlight> 
+
+        <DialogInput isDialogVisible={showDialog2}
+            title={"Chequeo de transmisión"}
+            message={"Cantidad de kilómetros para chequeo de transmisión"}
+            submitInput={ (inputText) => {setTransmission(inputText), setShowDialog2(false)} }
+            closeDialog={ () => setShowDialog2(false)}
+            submitText={"Enviar"}
+            cancelText={"Cancelar"}
+        >
+        </DialogInput>
 
         {date3 ?
          <Text style={styles.label}>El chequeo de bateria deberá realizarse el <Text style={styles.data}>{convertDate(date3)}</Text></Text>
@@ -159,7 +206,7 @@ export const ScheduleScreen = () => {
           <Text style={styles.appButtonText}>GUARDAR</Text>
         </TouchableHighlight> 
 
-        <AwesomeAlert
+        {/* <AwesomeAlert
           show={true}
           title="Agenda"
           message={message}
@@ -171,7 +218,7 @@ export const ScheduleScreen = () => {
           onConfirmPressed={() => {
             setShowAlert(false);
           }}
-        />
+        /> */}
 
       </View>
     </ScrollView>

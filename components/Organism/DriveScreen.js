@@ -6,8 +6,10 @@ import { LightScreen } from './LightScreen'
 import { TurningLight } from '../Molecules/TurningLight'
 import { Horn } from '../Molecules/Horn'
 import { PositionLight } from '../Molecules/PositionLight'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Odometer } from '../Molecules/Odometer'
+import AwesomeAlert from 'react-native-awesome-alerts';
+import { changeShowSeltBelt } from '../../actions/stateCar'
 
 export const DriveScreen = () => {
 
@@ -17,7 +19,9 @@ export const DriveScreen = () => {
 
     const [beacon, setBeacon ] = useState(false); 
 
-    const { active, odometer, velocity, battery } = useSelector(state => state.carStatus);
+    const dispatch = useDispatch();
+
+    const { active, odometer, velocity, battery, seatBeltMessage, showAlertSeat } = useSelector(state => state.carStatus);
 
     const beaconRedux = useSelector(state => state.lights.lights[4].active); 
 
@@ -67,6 +71,20 @@ export const DriveScreen = () => {
     return (
 
         <View style={styles.containerDriving}>
+
+            <AwesomeAlert
+                show={showAlertSeat}
+                title="Cinturón de seguridad"
+                message={seatBeltMessage}
+                closeOnTouchOutside={false}
+                closeOnHardwareBackPress={false}
+                showConfirmButton={true}
+                confirmText="Aceptar"
+                confirmButtonColor="#DD6B55"
+                onConfirmPressed={() => {
+                    dispatch(changeShowSeltBelt(false));
+                }}
+            />
             
             <Battery 
                 levelBattery={battery}

@@ -31,6 +31,10 @@ export const types = {
 
     saveTravel: '[saveTravel]',
 
+    seatBelt: '[seatBelt]',
+
+    changeShowSeltBelt : '[changeShowSeltBelt]',
+
     //SAVE STORAGE
 
     saveOdometer: '[SaveOdometer]'
