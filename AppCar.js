@@ -30,6 +30,7 @@ const AppCar = () => {
     try {
       const token = await AsyncStorage.getItem('user-token');
       tokenAuth(token);
+      console.log(token);
       dispatch(startLoadingNote());
       dispatch(startLoadingKms());
       if(token !== null) {
@@ -59,7 +60,8 @@ const AppCar = () => {
       return;
     } else {  
       try {
-        await clienteAxios.put('/api/vehicle', {kilometresTotal: store.getState().carStatus.odometer});
+        await clienteAxios.put('/api/vehicle', {kilometresTotal: store.getState().carStatus.odometer, 
+          kilometresPartial: store.getState().carStatus.odometer2});
       } catch (error) {
         console.log(error);
       }

@@ -35,6 +35,10 @@ export const types = {
 
     changeShowSeltBelt : '[changeShowSeltBelt]',
 
+    changeOdometer2: '[ChangeOdometer2]',
+
+    restartOdometer2: '[restartOdometer2]',
+
     //SAVE STORAGE
 
     saveOdometer: '[SaveOdometer]'

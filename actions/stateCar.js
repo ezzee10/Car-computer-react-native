@@ -30,6 +30,8 @@ export const startLoadingKms = () => {
             dispatch({ type: types.odometer, payload: 0 });
         } else {
             dispatch({ type: types.odometer, payload: result.data.vehicle[0].kilometresTotal });
+            dispatch({ type: types.changeOdometer2, payload: result.data.vehicle[0].kilometresPartial});
+            
         }  
     }
 };
@@ -42,4 +44,14 @@ export const changeSeltBelt = ( message ) => ({
 export const changeShowSeltBelt = ( state ) => ({
     type: types.changeShowSeltBelt,
     payload: state
+})
+
+export const changeOdometer2 = (kms) => ({
+    type: types.changeOdometer2,
+    payload: kms
+})
+
+export const restartOdometer2 = () => ({
+    type: types.restartOdometer2,
+    payload: 0
 })
