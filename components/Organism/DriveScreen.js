@@ -21,7 +21,7 @@ export const DriveScreen = () => {
 
     const dispatch = useDispatch();
 
-    const { active, odometer, velocity, battery, seatBeltMessage, showAlertSeat } = useSelector(state => state.carStatus);
+    const { active, odometer, odometer2, velocity, battery, seatBeltMessage, showAlertSeat } = useSelector(state => state.carStatus);
 
     const beaconRedux = useSelector(state => state.lights.lights[4].active); 
 
@@ -91,7 +91,8 @@ export const DriveScreen = () => {
             />
 
             <Odometer 
-                kms={odometer}
+                kmsT={odometer}
+                kmsP={odometer2}
             />
             
             <View style={styles.containerTop}>
