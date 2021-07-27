@@ -4,7 +4,7 @@ import React from 'react'
 export const Odometer = ({ kms }) => {
     return (
         <View>
-            <Text style={{color: 'white', fontSize: 20}}>Kilometros Recorridos: {kms} kms</Text>
+            <Text style={{color: 'yellow', fontSize: 30}}>Kms Totales: {kms}</Text>
         </View>
     )
 }

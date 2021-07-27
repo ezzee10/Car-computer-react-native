@@ -5,7 +5,9 @@ const initialState = {
     velocity: 0,
     doors: false,
     odometer: 0,
-    battery: 0
+    battery: 0,
+    seatBeltMessage: '',
+    showAlertSeat: false
 }
 
 export const carReducer = ( state = initialState, action) => {
@@ -36,6 +38,17 @@ export const carReducer = ( state = initialState, action) => {
             return{
                 ...state,
                 battery: action.payload
+            }
+        case types.seatBelt:
+            return {
+                ...state,
+                showAlertSeat: true,
+                seatBeltMessage: action.payload
+            }
+        case types.changeShowSeltBelt:
+            return {
+                ...state,
+                showAlertSeat: action.payload
             }
         default:
             return state;

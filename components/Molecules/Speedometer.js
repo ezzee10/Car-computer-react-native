@@ -8,7 +8,7 @@ export const Speedometer = ({ velocity }) => {
 
         <View style={styles.containSpeedometer}>
 
-            <View><Text style={{color: 'white', fontSize: 20}}>{velocity}</Text></View>
+            <View><Text style={{color: 'green', fontSize: 40}}>{velocity}</Text></View>
 
             
 
