@@ -1,4 +1,5 @@
 import { clienteAxios } from '../config/config';
+import { store } from '../store/store';
 import {types} from '../types/types';
 
 export const switchStateCar = ( state ) => ({
@@ -12,10 +13,19 @@ export const changeStateDoors = ( state ) => ({
     payload: state
 })
 
-export const changeStateOdometer = ( kms ) => ({
-    type: types.odometer,
-    payload: kms
-})
+export const changeStateOdometer = ( kms ) => {
+
+    return async( dispatch ) => {
+
+        try {
+                await clienteAxios.patch('/api/vehicle', {kilometresTotal: store.getState().carStatus.odometer + 1, 
+                kilometresPartial: store.getState().carStatus.odometer2 + 1});
+                dispatch({ type: types.odometer, payload: kms });
+        } catch (e) {
+            console.log('Error al cargar la cantidad de kilómetros: ' + e);
+        }
+    }
+};
 
 export const changeBattery = ( battery ) => ({
     type: types.battery,
@@ -24,15 +34,14 @@ export const changeBattery = ( battery ) => ({
 
 export const startLoadingKms = () => {
     return async( dispatch ) => {
-        const result = await clienteAxios.get('/api/vehicle');
-        if (result.data.vehicle.length === 0) {
-            await clienteAxios.post('/api/vehicle', { kilometresTotal: 0 });
-            dispatch({ type: types.odometer, payload: 0 });
-        } else {
+
+        try {
+            const result = await clienteAxios.get('/api/vehicle');
             dispatch({ type: types.odometer, payload: result.data.vehicle[0].kilometresTotal });
             dispatch({ type: types.changeOdometer2, payload: result.data.vehicle[0].kilometresPartial});
-            
-        }  
+        } catch (e) {
+            console.log('Error al cargar la cantidad de kilómetros: ' + e);
+        }
     }
 };
 

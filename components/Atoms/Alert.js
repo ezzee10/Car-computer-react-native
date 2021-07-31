@@ -5,6 +5,8 @@ export const Alert = ({ message }) => {
 
     const {msg , type } = message;
 
+    console.log(msg);
+
     return (
         
         <Text style={[type === 'success' ? styles.success : styles.error , styles.alert]}> { msg } </Text>

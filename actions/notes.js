@@ -22,23 +22,30 @@ export const createNote = ( note ) => {
     }
 };
 
-export const updateNote = ( note ) => {
+export const updateNote = ( note ) => ({
 
-    return async( dispatch ) => {
-        try {
-            await clienteAxios.put('/api/notes', note);
-            dispatch({type: types.updateNote, payload: note});
-            dispatch({type: types.setMessageNote, payload: 'Agenda actualizada correctamente'});
-        } catch (e) {
-            dispatch({type: types.setMessageNote, payload: 'Fallo al actualizar la agenda'});
-            console.log(e);
-        }
-    }
-};
-
-export const showAlert = ( state ) => ({
-
-    type: types.showAlert,
-    payload: state
+    type: types.updateNote,
+    payload: note
     
 });
+
+// export const updateNote = ( note ) => {
+
+//     return async( dispatch ) => {
+//         try {
+//             await clienteAxios.put('/api/notes', note);
+//             dispatch({type: types.updateNote, payload: note});
+//             dispatch({type: types.setMessageNote, payload: 'Agenda actualizada correctamente'});
+//         } catch (e) {
+//             dispatch({type: types.setMessageNote, payload: 'Fallo al actualizar la agenda'});
+//             console.log(e);
+//         }
+//     }
+// };
+
+// export const showAlert = ( state ) => ({
+
+//     type: types.showAlert,
+//     payload: state
+    
+// });

@@ -1,35 +1,29 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TouchableHighlight, ScrollView } from 'react-native'
+import { View, StyleSheet, Text, TouchableHighlight, ScrollView, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import {convertDate} from '../../helpers/convertDate';
-import { createNote, updateNote } from '../../actions/notes';
-import AwesomeAlert from 'react-native-awesome-alerts';
+import { updateNote } from '../../actions/notes';
 import DialogInput from 'react-native-dialog-input';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { clienteAxios } from '../../config/config';
 
 export const ScheduleScreen = () => {
 
   const dispatch = useDispatch();
 
-  const { note, message, alert } = useSelector(state => state.note);
+  const { note  } = useSelector(state => state.note);
 
-  const [showAlert, setShowAlert ] = useState(alert);
+  const [date, setDate1] = useState(new Date(note.vtv));
 
-  const [date, setDate1] = useState(note?.vtv ? new Date(note.vtv) : null);
+  const [date2, setDate2] = useState(new Date(note.fireExtinguisher));
 
-  const [date2, setDate2] = useState(note?.fireExtinguisher ? new Date(note.fireExtinguisher) : null);
+  const [rotation, setRotation] = useState(note.rotation);
 
-  const [date3, setDate3] = useState(note?.battery ? new Date(note.battery) : null);
-
-  const [wheels, setWheels] = useState(note?.wheels ? note.wheels : 100000);
-
-  const [transmission, setTransmission] = useState(note?.transmission ? note.transmission : 15000);
+  const [transmission, setTransmission] = useState(note.transmission);
 
   const [showDatePicker1, setShow1] = useState(false);
 
   const [showDatePickerTwo, setShow2] = useState(false);
-
-  const [showDatePickerThree, setShow3] = useState(false);
 
   const [showDialog1, setShowDialog1] = useState(false);
 
@@ -48,30 +42,37 @@ export const ScheduleScreen = () => {
     setDate2(currentDate);
   };
 
-  const onChange3 = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow3(Platform.OS === 'ios');
-    setDate3(currentDate);
-  };
+  const showAlert = (msg) => {
+    Alert.alert(  
+      'Agenda',  
+      `${msg}`,  
+      [  
+          {  
+              text: 'Cancelar',   
+              style: 'destructive',  
+          },  
+          {text: 'Aceptar'},  
+      ]  
+    );  
+  }
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
 
     const new_note = {
       vtv : date,
       fireExtinguisher: date2,
       battery: date3,
-      wheels: wheels,
+      rotation: rotation,
       transmission: transmission
     }
 
-    if (note === undefined ) {
-      if (date !== null && date2 !== null && date3 !== null) {
-        dispatch(createNote(new_note));
-        setShowAlert(true);
-      }
-    } else {
-        dispatch(updateNote(new_note));
-        setShowAlert(true);
+    try {
+      await clienteAxios.put('/api/notes', new_note);
+      dispatch(updateNote(new_note));
+      showAlert('Agenda actualizada correctamente');
+    } catch (error) {
+      showAlert('Error al actualizar agenda');
+      console.log(error);
     }
   }
 
@@ -89,11 +90,12 @@ export const ScheduleScreen = () => {
         {showDatePicker1 ? 
           <DateTimePicker
             testID="dateTimePicker"
-            value={date ? date : new Date()}
+            value={date}
             mode={'date'}
             is24Hour={true}
             display="default"
             onChange={onChange1}
+            minimumDate={new Date()}
           />
           : null 
         }
@@ -115,12 +117,13 @@ export const ScheduleScreen = () => {
         {showDatePickerTwo ? 
           <DateTimePicker
             testID="dateTimePicker"
-            value={date2 ? date2 : new Date()}
+            value={date2}
             mode={'date'}
             is24Hour={true}
             display="default"
             onChange={onChange2}
             style={{height: 600}}
+            minimumDate={new Date()}
           />
           : null 
         }
@@ -133,23 +136,42 @@ export const ScheduleScreen = () => {
 
         </TouchableHighlight> 
 
-        <Text style={styles.label}>La rotación de cubiertas deberá realizarse dentro de <Text style={styles.data}>{wheels} km</Text></Text>
+        <Text style={styles.label}>La rotación de cubiertas deberá realizarse dentro de <Text style={styles.data}>{rotation} km</Text></Text>
 
-        <TouchableHighlight 
-          style ={styles.button}
-          onPress={() => setShowDialog1(true)}
-        >
-          <Text style={styles.appButtonText}> Modificar </Text>
+        <View style={{flexDirection: 'row'}}>
 
-        </TouchableHighlight> 
+          <TouchableHighlight 
+            style ={styles.button}
+            onPress={() => setShowDialog1(true)}
+          >
+            <Text style={styles.appButtonText}> Modificar </Text>
 
-        <DialogInput isDialogVisible={showDialog1}
+          </TouchableHighlight> 
+
+          <TouchableHighlight 
+            style ={[styles.buttonRestart, styles.button]}
+            onPress={() => setShowDialog1(true)}
+          >
+            <Text style={styles.appButtonText}> Reiniciar </Text>
+
+          </TouchableHighlight> 
+
+        </View>
+
+        <DialogInput 
+            isDialogVisible={showDialog1}
             title={"Rotación de cubiertas"}
             message={"Cantidad de kilómetros para rotación de cubiertas"}
-            submitInput={ (inputText) => {setWheels(inputText), setShowDialog1(false)} }
+            submitInput={ (inputText) => {setRotation(inputText), setShowDialog1(false)} }
             closeDialog={ () => setShowDialog1(false)}
+            hintInput={rotation.toString()}
+            hintTextColor={'white'}
             submitText={"Enviar"}
             cancelText={"Cancelar"}
+            dialogStyle={{
+              backgroundColor: 'purple'
+              }
+            }
         >
         </DialogInput>
 
@@ -173,52 +195,12 @@ export const ScheduleScreen = () => {
         >
         </DialogInput>
 
-        {/* {date3 ?
-         <Text style={styles.label}>El chequeo de bateria deberá realizarse el <Text style={styles.data}>{convertDate(date3)}</Text></Text>
-          : 
-          <Text style={styles.label}>Ingrese la fecha en la cual se instaló la bateria</Text>
-        }
-
-        <TouchableHighlight 
-          style ={styles.button}
-          onPress={() => setShow3(!showDatePickerThree)}
-        >
-          <Text style={styles.appButtonText}> {date3 ? 'Actualizar' : 'Agendar'} </Text>
-
-        </TouchableHighlight> 
-
-        {showDatePickerThree ? 
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date3 ? date3 : new Date()}
-            mode={'date'}
-            is24Hour={true}
-            display="default"
-            onChange={onChange3}
-          />
-          : null 
-        } */}
-
         <TouchableHighlight 
           style ={[styles.button, styles.save]}
           onPress={handleRegister}
         >
           <Text style={styles.appButtonText}>GUARDAR</Text>
         </TouchableHighlight> 
-
-        {/* <AwesomeAlert
-          show={true}
-          title="Agenda"
-          message={message}
-          closeOnTouchOutside={false}
-          closeOnHardwareBackPress={false}
-          showConfirmButton={true}
-          confirmText="Aceptar"
-          confirmButtonColor="#DD6B55"
-          onConfirmPressed={() => {
-            setShowAlert(false);
-          }}
-        /> */}
 
       </View>
     </ScrollView>
@@ -272,6 +254,9 @@ const styles = StyleSheet.create({
   },
   data: {
     color: 'yellow'
+  },
+  buttonRestart: {
+    marginLeft: 10
   }
 
 })
