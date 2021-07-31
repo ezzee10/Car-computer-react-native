@@ -12,7 +12,7 @@ export const entries = [
     },
     {
       id: '58694a0f-3da1-471f-bd96-1455731e29d72',
-      title: 'bateria',
+      title: 'información',
       icon: 'battery-full-outline'
     },
     {

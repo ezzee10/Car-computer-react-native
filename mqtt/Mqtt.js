@@ -18,13 +18,13 @@ export const getMqtt = () => {
 
     mqttClient.on(Mqtt.Event.Message,(topic, message) => {
 
-        // console.log(topic, message.toString());
+        console.log(topic, message.toString());
 
         switch (topic) {
-            case 'esp/odometer':
+            case 'app/kilometraje':
                 store.dispatch(changeStateOdometer(parseInt(message.toString())));
                 break;
-            case 'esp/velocimetro':
+            case 'app/velocidad':
                 store.dispatch(changeSpeedometer(parseInt(message.toString())));
                 break;
             case 'esp/bateria':
@@ -48,8 +48,8 @@ export const getMqtt = () => {
         mqttClient.subscribe(['esp/bocina'], [0])
         mqttClient.subscribe(['esp/luces/baja'], [0])
         mqttClient.subscribe(['esp/luces/baliza'], [0])
-        mqttClient.subscribe(['esp/velocimetro'], [0])
-        mqttClient.subscribe(['esp/odometer'], [0])
+        mqttClient.subscribe(['app/velocidad'], [0])
+        mqttClient.subscribe(['app/kilometraje'], [0])
         mqttClient.subscribe(['esp/bateria'], [0])
         mqttClient.subscribe(['app/giroIzquierdo'], [0])
         mqttClient.subscribe(['app/giroDerecho'], [0])

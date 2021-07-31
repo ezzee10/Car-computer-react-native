@@ -11,7 +11,7 @@ import { noteReducer } from '../reducers/noteReducer';
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
-const reducers = combineReducers({
+const appReducer = combineReducers({
     lights: lightsReducer,
     auth: authReducer,
     mqtt: mqttReducer,
@@ -22,8 +22,18 @@ const reducers = combineReducers({
 })
 
 export const store = createStore(
-    reducers,
+    appReducer,
     composeEnhancers(
         applyMiddleware( thunk )
     ),
 )
+
+export const rootReducer = (state, action) => {
+
+    if(action.type !== 'RESET_APP') {
+        console.log('Entre aca');
+        return appReducer(undefined, action)
+    }
+    
+    return appReducer(state, action);
+}

@@ -9,6 +9,7 @@ import { startLoadingNote } from './actions/notes';
 import { useDispatch } from 'react-redux';
 import { startLoadingKms } from './actions/stateCar';
 import { clienteAxios } from './config/config';
+import { saveTravelInitial, saveUserInitial } from './actions/user';
 
 const AppCar = () => {
 
@@ -30,9 +31,10 @@ const AppCar = () => {
     try {
       const token = await AsyncStorage.getItem('user-token');
       tokenAuth(token);
-      console.log(token);
       dispatch(startLoadingNote());
       dispatch(startLoadingKms());
+      dispatch(saveUserInitial());
+      dispatch(saveTravelInitial());
       if(token !== null) {
         setLogged(true);
       } else {

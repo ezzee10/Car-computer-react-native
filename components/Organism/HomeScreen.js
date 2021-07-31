@@ -28,7 +28,7 @@ export const HomeScreen = () => {
     }
 
     const handleDoors = () => {
-        mqtt.publish('esp/puertas', Buffer.from(JSON.stringify(!doors), "utf8"))
+        mqtt.publish('esp/alarma', Buffer.from(JSON.stringify(!doors), "utf8"))
         dispatch(changeStateDoors(!doors))
     }
 

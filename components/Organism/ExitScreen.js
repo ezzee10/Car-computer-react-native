@@ -7,6 +7,8 @@ import {
     TouchableHighlight,
   } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+import { rootReducer, store } from '../../store/store';
+import { types } from '../../types/types';
 
 export const ExitScreen = () => {
 

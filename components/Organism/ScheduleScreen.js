@@ -173,7 +173,7 @@ export const ScheduleScreen = () => {
         >
         </DialogInput>
 
-        {date3 ?
+        {/* {date3 ?
          <Text style={styles.label}>El chequeo de bateria deberá realizarse el <Text style={styles.data}>{convertDate(date3)}</Text></Text>
           : 
           <Text style={styles.label}>Ingrese la fecha en la cual se instaló la bateria</Text>
@@ -197,7 +197,7 @@ export const ScheduleScreen = () => {
             onChange={onChange3}
           />
           : null 
-        }
+        } */}
 
         <TouchableHighlight 
           style ={[styles.button, styles.save]}

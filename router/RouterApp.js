@@ -12,6 +12,7 @@ import { DriveScreen } from '../components/Organism/DriveScreen';
 import {UbicationScreen} from '../components/Organism/UbicationScreen';
 import { getMqtt } from '../mqtt/Mqtt';
 import { ExitScreen } from '../components/Organism/ExitScreen';
+import { InfoScreen } from '../components/Organism/InfoScreen';
 
 const RouterApp = ({ logged }) => {
 
@@ -67,6 +68,10 @@ const RouterApp = ({ logged }) => {
             <Stack.Screen 
               name="conducción" 
               component={DriveScreen} 
+            />
+            <Stack.Screen
+              name="información"
+              component={InfoScreen}
             />
             <Stack.Screen
               name="Registro"

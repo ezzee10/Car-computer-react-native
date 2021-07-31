@@ -51,6 +51,11 @@ export const changeOdometer2 = (kms) => ({
     payload: kms
 })
 
+export const changeSpeedometer = (velocity) => ({
+    type: types.speedometer,
+    payload: velocity
+})
+
 export const restartOdometer2 = () => ({
     type: types.restartOdometer2,
     payload: 0
