@@ -6,10 +6,16 @@ import { clienteAxios } from '../../config/config';
 import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import tokenAuth from '../../config/tokenAuth';
+import { startLoadingNote } from '../../actions/notes';
+import { startLoadingKms } from '../../actions/stateCar';
+import { saveTravelInitial, saveUserInitial } from '../../actions/user';
+import { useDispatch } from 'react-redux';
 
 export const LoginScreen = () => {
 
     const navigation = useNavigation();
+
+    const dispatch = useDispatch();
 
     const [message, setMessage] = useState({ msg:'', type:'' });
 
@@ -21,12 +27,6 @@ export const LoginScreen = () => {
 
     const onChangeText = (key, val) => {
       setLogin({...login,  [key]: val });
-    }
-
-    const deleteForm = () => {
-      setLogin({
-        email: '', password: ''
-      })
     }
 
     const {email, password } = login;
@@ -46,7 +46,6 @@ export const LoginScreen = () => {
         try {
 
           const token = await clienteAxios.post('/api/auth', user_login);
-          console.log(token.data.token);
           setMessage({type: 'success', msg:'Usuario logueado correctamente'});
 
           tokenAuth(token.data.token);
@@ -54,10 +53,15 @@ export const LoginScreen = () => {
           if (toggleCheckBox) {
             await AsyncStorage.setItem('user-token', token.data.token);
           }
+
+          dispatch(startLoadingNote());
+          dispatch(startLoadingKms());
+          dispatch(saveUserInitial());
+          dispatch(saveTravelInitial());
         
           setTimeout(() => {
-            navigation.navigate('Home');
             setMessage({type: '', msg: ''});
+            navigation.navigate('Home');
           }, 1000);
 
         } catch (error) {

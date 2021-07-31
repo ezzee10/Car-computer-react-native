@@ -23,7 +23,7 @@ export const carReducer = ( state = initialState, action) => {
         case types.speedometer:
             return{
                 ...state,
-                velocity: state.velocity + action.payload
+                velocity: action.payload
             }
         case types.doors:
             return{

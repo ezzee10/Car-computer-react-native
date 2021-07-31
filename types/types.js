@@ -39,6 +39,12 @@ export const types = {
 
     restartOdometer2: '[restartOdometer2]',
 
+    saveUser: '[SaveUser]',
+
+    saveTravelInitial: '[SaveTravelInitial]',
+
+    saveTravel: '[SaveTravel]',
+
     //SAVE STORAGE
 
     saveOdometer: '[SaveOdometer]'

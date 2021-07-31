@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { StyleSheet, Text, View } from "react-native";
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MapViewDirections from 'react-native-maps-directions';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 import variables from '../../variables';
 import geocodingFormat from "../../helpers/geocodingFormat";
 import { clienteAxios } from "../../config/config";
+import { saveTravel } from "../../actions/user";
 
 export const UbicationScreen = () => {
 
@@ -20,6 +21,8 @@ export const UbicationScreen = () => {
   }, []);
 
   const { odometer } = useSelector(state => state.carStatus)
+
+  const dispatch = useDispatch()
 
   const [location, setLocation] = useState({
     loaded: false,
@@ -88,6 +91,8 @@ export const UbicationScreen = () => {
       setKmsTravelStart(0);
       await clienteAxios.post('/api/travel', travel);
       console.log(travel);
+      dispatch(saveTravel(travel));  
+      console.log(travel);
     } catch (error) {
       console.log(error);
     } 
@@ -106,7 +111,7 @@ export const UbicationScreen = () => {
             style = {{ flex : 1 }}
             provider = { PROVIDER_GOOGLE }
             showsUserLocation
-            initialRegion = {{ latitude , longitude , latitudeDelta , longitudeDelta }}>
+            initialRegion = {{ latitude , apitude , latitudeDelta , longitudeDelta }}>
 
             <MapView.Marker
               coordinate={{ latitude, longitude }}
@@ -130,7 +135,7 @@ export const UbicationScreen = () => {
               apikey={variables.GOOGLE_API_KEY}
               onReady = { result =>  {
                 console.log(result.distance);
-                if(result.distance <= 0.1) {
+                if(result.distance <= 100) {
                   saveTravel();
                 }
               }}
