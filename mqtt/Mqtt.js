@@ -21,23 +21,23 @@ export const getMqtt = () => {
         console.log(topic);
 
         switch (topic) {
-            case 'app/kilometraje':
-                store.dispatch(changeStateOdometer(parseInt(message.toString())));
-                break;
-            case 'app/velocidad':
-                store.dispatch(changeSpeedometer(parseInt(message.toString())));
-                break;
-            case 'esp/bateria':
-                store.dispatch(changeBattery(parseInt(message.toString())));
-                break;
-            case 'app/giroIzquierdo':
-                store.dispatch(switchLeftTurn(parseInt(message.toString())));
-                break;
-            case 'app/giroDerecho':
-                store.dispatch(switchRigthTurn(parseInt(message.toString())));
-                break;
-            case 'app/alerta':
-                store.dispatch(changeSeltBelt(message.toString()));
+            // case 'app/kilometraje':
+            //     store.dispatch(changeStateOdometer(parseInt(message.toString())));
+            //     break;
+            // case 'app/velocidad':
+            //     store.dispatch(changeSpeedometer(parseInt(message.toString())));
+            //     break;
+            // case 'esp/bateria':
+            //     store.dispatch(changeBattery(parseInt(message.toString())));
+            //     break;
+            // case 'app/giroIzquierdo':
+            //     store.dispatch(switchLeftTurn(parseInt(message.toString())));
+            //     break;
+            // case 'app/giroDerecho':
+            //     store.dispatch(switchRigthTurn(parseInt(message.toString())));
+            //     break;
+            // case 'app/alerta':
+            //     store.dispatch(changeSeltBelt(message.toString()));
             default:
                 break;
         }
