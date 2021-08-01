@@ -9,7 +9,7 @@ import Geocoder from 'react-native-geocoding';
 import variables from '../../variables';
 import geocodingFormat from "../../helpers/geocodingFormat";
 import { clienteAxios } from "../../config/config";
-import { saveTravel } from "../../actions/user";
+import { saveTravels } from "../../actions/user";
 
 export const UbicationScreen = () => {
 
@@ -80,7 +80,7 @@ export const UbicationScreen = () => {
   const saveTravel = async () => {
 
     try {
-      const response = await Geocoder.from(currentLat, currentLng);
+      const response = await Geocoder.from({latitude: currentLat, longitude: currentLng});
       let travel = {
         kilometresTravel: Math.abs(odometer - kmsTravelStart),
         originPlace: originPlace,
@@ -90,8 +90,7 @@ export const UbicationScreen = () => {
       }
       setKmsTravelStart(0);
       await clienteAxios.post('/api/travel', travel);
-      console.log(travel);
-      dispatch(saveTravel(travel));  
+      // dispatch(saveTravels(travel));  
       console.log(travel);
     } catch (error) {
       console.log(error);
@@ -111,7 +110,7 @@ export const UbicationScreen = () => {
             style = {{ flex : 1 }}
             provider = { PROVIDER_GOOGLE }
             showsUserLocation
-            initialRegion = {{ latitude , apitude , latitudeDelta , longitudeDelta }}>
+            initialRegion = {{ latitude , longitude , latitudeDelta , longitudeDelta }}>
 
             <MapView.Marker
               coordinate={{ latitude, longitude }}
@@ -135,7 +134,7 @@ export const UbicationScreen = () => {
               apikey={variables.GOOGLE_API_KEY}
               onReady = { result =>  {
                 console.log(result.distance);
-                if(result.distance <= 100) {
+                if(result.distance <= 0.1) {
                   saveTravel();
                 }
               }}

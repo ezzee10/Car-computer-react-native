@@ -22,7 +22,7 @@ export const saveTravelInitial = () => {
     }
 }
 
-export const saveTravel = (travel) => ({
+export const saveTravels = (travel) => ({
     types: types.saveTravel,
     payload: travel
 });

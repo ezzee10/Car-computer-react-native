@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, TouchableHighlight, FlatList} from 'react-native'
+import React from 'react'
+import { View, Text, StyleSheet, TouchableHighlight, Alert} from 'react-native'
 import { useSelector } from 'react-redux'
 import { clienteAxios } from '../../config/config'
 
 export const InfoScreen = () => {
 
-    const {name, surname, email, travel} = useSelector(state => state.user)
+    const {name, surname, email} = useSelector(state => state.user)
     const {odometer: kms} = useSelector(state => state.carStatus)
     const {note} = useSelector(state => state.note);
 
@@ -14,14 +14,33 @@ export const InfoScreen = () => {
             name,
             surname,
             email,
-            travel,
             kms,
             note
         }
 
-        console.log(info);
+        const showAlert = (msg) => {
+            Alert.alert(  
+              'Agenda',  
+              `${msg}`,  
+              [  
+                  {  
+                      text: 'Cancelar',   
+                      style: 'destructive',  
+                  },  
+                  {text: 'Aceptar'},  
+              ]  
+            );  
+          }
 
-        await clienteAxios.post('/api/email', info);
+        try {
+            await clienteAxios.post('/api/email', info);
+            showAlert('Correo enviado correctamente');
+        } catch (e) {
+            showAlert('Ocurrió un error al enviar el correo');
+            console.log(e);
+        }
+
+        
     }
     
     
