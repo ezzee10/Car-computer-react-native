@@ -66,6 +66,10 @@ secrets.js
 .prettierrc.js
 app.json
 
+<<<<<<< HEAD
 .env
 
 
+=======
+.gitignore
+>>>>>>> 1b587bc4b0ebe34384eede40785730771a497e60
