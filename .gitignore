@@ -66,4 +66,5 @@ secrets.js
 .prettierrc.js
 app.json
 
-.gitignore
+*.hprof
+
