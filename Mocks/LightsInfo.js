@@ -9,24 +9,25 @@ export const lightsInfo = [
       titleMqtt: 'baja'
     },
     {
+      id: '58694a0f-3da1-471f-bd96-145571313221e293d725',
+      title: 'Baliza',
+      active: false,
+      image: require('../assets/images/dashboard/image6.png'),
+      imageOn: require('../assets/images/dashboard/image6-on.png'),
+      titleMqtt: 'baliza'
+    },
+    {
       id: '3ac68afc-c605-48d3-a4f8-fbd91123213aa97f63',
-      title: 'Luces altas',
+      title: 'Luz alta',
       active: false,
       image: require('../assets/images/dashboard/image2.png'),
       imageOn: require('../assets/images/dashboard/image2-on.png'),
       titleMqtt: 'alta'
     },
-    // {
-    //   id: '58694a0f-3da1-471f-bd96-145532112713e29d72',
-    //   title: 'Luz de posición',
-    //   active: true,
-    //   image: require('../assets/images/dashboard/image3.png'),
-    //   imageOn: require('../assets/images/dashboard/image3-on.png') 
-    // },
     {
       id: '58694a0f-3da1-471f-bd96-142131255731e29d72',
       title: 'Luz interior',
-      active: true,
+      active: false,
       image: require('../assets/images/dashboard/image4.png'),
       imageOn: require('../assets/images/dashboard/image4-on.png'),
       titleMqtt: 'interior'
@@ -39,17 +40,5 @@ export const lightsInfo = [
       imageOn: require('../assets/images/dashboard/image5-on.png'),
       titleMqtt: 'reflector'
     },
-    // {
-    //   id: '58694a0f-3da1-471f-bd96-1455222271e29d732',
-    //   title: 'Luz de freno',
-    //   active: false
-    // },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571313221e293d725',
-      title: 'Baliza',
-      active: false,
-      image: require('../assets/images/dashboard/image6.png'),
-      imageOn: require('../assets/images/dashboard/image6-on.png'),
-      titleMqtt: 'baliza'
-    },
+    
 ];

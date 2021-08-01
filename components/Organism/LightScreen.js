@@ -21,7 +21,7 @@ export const LightScreen = () => {
 
             <FlatList
                 numColumns={3}
-                columnWrapperStyle={{ justifyContent: "space-between"}}
+                columnWrapperStyle={{ justifyContent: "space-around"}}
                 contentContainerStyle={{
                 marginTop:20 
                 }}

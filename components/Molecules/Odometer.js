@@ -15,13 +15,13 @@ export const Odometer = ({ kmsT, kmsP }) => {
     return (
         <View style={styles.container}>
 
-            <View style={{marginRight: 50}}>
-                <Text style={{color: 'yellow', fontSize: 25}}>Km Total</Text>
+            <View style={{marginRight: '10%'}}>
+                <Text style={{color: 'yellow', fontSize: 25}}>Kms Totales</Text>
                 <Text style={{color: 'yellow', fontSize: 25, textAlign:'center'}}>{kmsT} km</Text>
             </View>
 
             <View >
-                <Text style={{color: 'yellow', fontSize: 25}}>Km Parcial</Text>
+                <Text style={{color: 'yellow', fontSize: 25}}>Kms Parciales</Text>
                 <Text style={{color: 'yellow', fontSize: 25, textAlign: 'center'}}>{kmsP} km</Text>
                 <TouchableHighlight 
                     style ={styles.button}
@@ -59,6 +59,6 @@ const styles = StyleSheet.create({
     },
     container: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'center'
     }
 })

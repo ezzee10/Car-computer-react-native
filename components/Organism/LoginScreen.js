@@ -7,7 +7,7 @@ import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import tokenAuth from '../../config/tokenAuth';
 import { startLoadingNote } from '../../actions/notes';
-import { startLoadingKms } from '../../actions/stateCar';
+import { startCar } from '../../actions/stateCar';
 import { saveTravelInitial, saveUserInitial } from '../../actions/user';
 import { useDispatch } from 'react-redux';
 
@@ -55,7 +55,7 @@ export const LoginScreen = () => {
           }
 
           dispatch(startLoadingNote());
-          dispatch(startLoadingKms());
+          dispatch(startCar());
           dispatch(saveUserInitial());
           dispatch(saveTravelInitial());
         
@@ -66,7 +66,7 @@ export const LoginScreen = () => {
 
         } catch (error) {
           console.log(error);  
-          setMessage({type: 'error', msg:'Usuario o contraseña incorrecta'});
+          setMessage({type: 'error', msg:'Error al autenticar usuario'});
         }      
     }
 

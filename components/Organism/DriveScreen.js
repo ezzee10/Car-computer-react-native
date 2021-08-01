@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import { Speedometer } from '../Molecules/Speedometer'
 import { Battery } from '../Molecules/Battery'
 import { LightScreen } from './LightScreen'
@@ -70,10 +70,10 @@ export const DriveScreen = () => {
 
     return (
 
-        <View style={styles.containerDriving}>
+        <ScrollView style={styles.containerDriving}>
 
             <AwesomeAlert
-                show={false}
+                show={showAlertSeat}
                 title="Cinturón de seguridad"
                 message={seatBeltMessage}
                 closeOnTouchOutside={false}
@@ -85,10 +85,12 @@ export const DriveScreen = () => {
                     dispatch(changeShowSeltBelt(false));
                 }}
             />
-            
-            <Battery 
-                levelBattery={battery}
-            />
+
+            <View>
+                <Battery 
+                    levelBattery={battery}
+                />
+            </View>
 
             <Odometer 
                 kmsT={odometer}
@@ -124,7 +126,7 @@ export const DriveScreen = () => {
 
             </View>
 
-            <View style={{flexDirection: 'row', marginBottom: 30, marginTop: 30}}>
+            <View style={{flexDirection: 'row', marginBottom: '1%', marginTop: '1%', justifyContent: 'center'}}>
 
                 <Horn 
                     iconOn = 'megaphone'
@@ -144,24 +146,29 @@ export const DriveScreen = () => {
     
             <LightScreen />
 
-        </View>
+        </ScrollView>
 
     
     )
 }
 
 const styles = StyleSheet.create({
-    containerDriving: {
-        alignItems: 'center',
+    scroll: {
         marginTop: 30,
         flex: 1
+    },
+    containerDriving: {
+        marginTop: 30,
+        flex: 1,
+        paddingLeft: 20,
+        paddingRight: 20
     },
     containerTop: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 50,
-        marginBottom: 30
+        marginTop: '3%',
+        marginBottom: '3%'
     },
     horn: {
         marginBottom: 30,

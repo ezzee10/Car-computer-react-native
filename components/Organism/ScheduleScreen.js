@@ -16,13 +16,13 @@ export const ScheduleScreen = () => {
 
   const {odometer, kmsMissingUpdateRotationWheels, kmsMissingUpdateTransmission } = useSelector(state => state.carStatus);
 
-  const [date, setDate1] = useState(new Date(note.vtv));
+  const [date, setDate1] = useState(new Date(note?.vtv));
 
-  const [date2, setDate2] = useState(new Date(note.fireExtinguisher));
+  const [date2, setDate2] = useState(new Date(note?.fireExtinguisher));
 
-  const [rotation, setRotation] = useState(note.rotation);
+  const [rotation, setRotation] = useState(note?.rotation);
 
-  const [transmission, setTransmission] = useState(note.transmission);
+  const [transmission, setTransmission] = useState(note?.transmission);
 
   const [showDatePicker1, setShow1] = useState(false);
 
@@ -65,7 +65,6 @@ export const ScheduleScreen = () => {
     try {
       await clienteAxios.patch('/api/vehicle', {kmsMissingUpdateRotationWheels: parseInt(odometer) + parseInt(kms)});
       dispatch(updateRotateKms(parseInt(odometer) + parseInt(kms)));
-        // kmsMissingUpdateTransmission: parseInt(odometer) + parseInt(transmission)
     } catch (error) {
       console.log(error);
     }
@@ -79,7 +78,6 @@ export const ScheduleScreen = () => {
       console.log(error);
     }
   }
-  
 
   const handleRegister = async () => {
 
@@ -162,7 +160,7 @@ export const ScheduleScreen = () => {
 
         <Text style={styles.label}>La rotación de cubiertas deberá realizarse cada <Text style={styles.data}>{rotation} km</Text></Text>
 
-        <Text style={styles.label}>Kilómetros faltantes: <Text style={styles.data}>{kmsMissingUpdateRotationWheels - odometer === 0 ? 'Es tiempo de rotar las cubiertas' : kmsMissingUpdateRotationWheels - odometer + 'km'}</Text></Text>
+        <Text style={styles.label}><Text style={styles.data}>{kmsMissingUpdateRotationWheels - odometer <= 0 ? <Text style={{color: 'red'}}>Es tiempo de rotar las cubiertas</Text> : 'Kilómetros faltantes: ' + (parseInt(kmsMissingUpdateRotationWheels) - parseInt(odometer)) + 'km'}</Text></Text>
 
         <View style={{flexDirection: 'row'}}>
 
@@ -176,7 +174,7 @@ export const ScheduleScreen = () => {
 
           <TouchableHighlight 
             style ={[styles.buttonRestart, styles.button]}
-            onPress={() => setShowDialog1(true)}
+            onPress={() => updateKmsEmail1(rotation)}
           >
             <Text style={styles.appButtonText}> Reiniciar </Text>
 
@@ -201,9 +199,9 @@ export const ScheduleScreen = () => {
         >
         </DialogInput>
 
-        <Text style={styles.label}>El chequeo de transmisión deberá realizarse dentro de <Text style={styles.data}>{transmission} km</Text></Text>
+        <Text style={styles.label}>El chequeo de transmisión deberá realizarse cada <Text style={styles.data}>{transmission} km</Text></Text>
 
-        <Text style={styles.label}>Kilómetros faltantes: <Text style={styles.data}>{kmsMissingUpdateTransmission - odometer === 0 ? 'Es tiempo de realizar el chequeo de transmisión' : kmsMissingUpdateTransmission - odometer + 'km'}</Text></Text>
+        <Text style={styles.label}><Text style={styles.data}>{kmsMissingUpdateTransmission - odometer <= 0 ? <Text style={{color: 'red'}}>Es tiempo de realizar el chequeo de transmisión</Text> : 'Kilómetros faltantes: ' + (parseInt(kmsMissingUpdateTransmission) - parseInt(odometer)) + 'km'}</Text></Text>
         
         <View style={{flexDirection: 'row'}}>
 
@@ -286,7 +284,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: 'white',
-    marginBottom: 10,
+    marginBottom: '5%',
     textAlign: 'center',
     fontSize: 20
   },

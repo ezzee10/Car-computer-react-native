@@ -59,7 +59,7 @@ export const InfoScreen = () => {
                         style ={styles.button}
                         onPress={() => sendInfo()}
                     >
-                    <Text style={styles.appButtonText}> Enviar información </Text>
+                    <Text style={styles.appButtonText}> Enviar</Text>
 
                     </TouchableHighlight> 
                 </View>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
       send: {
           marginTop: 20,
           marginBottom: 20,
-          fontSize: 25,
+          fontSize: 18,
           color: 'yellow'
       }
 })

@@ -3,6 +3,10 @@ import { View, StyleSheet, Text } from 'react-native'
 
 export const Battery = ( { levelBattery }) => {
 
+    if (levelBattery > 100) {
+        levelBattery = 100;
+    }
+
     const levelColorBattery = ( level ) => {
 
         if ( level > 50 ) {
@@ -17,8 +21,8 @@ export const Battery = ( { levelBattery }) => {
     return (
 
         <View style={styles.containerBattery}>
-            <View style={[styles.battery, {backgroundColor: `${levelColorBattery(levelBattery)}`, width: `${ levelBattery }%` }]}> 
-            </View>      
+            <View style={[styles.battery, {backgroundColor: `${levelColorBattery(levelBattery)}`, width: `${levelBattery}%` }]}> 
+            </View>  
             <Text style={styles.text}> { levelBattery } %</Text>
         </View>
     )
@@ -26,27 +30,29 @@ export const Battery = ( { levelBattery }) => {
 
 const styles = StyleSheet.create({
     containerBattery: {
-        width: '50%',
+        width: '65%',
         flex: 1,
         borderWidth: 2,
         borderColor: '#ccc',
         borderRadius: 6,
         backgroundColor: '#7C7475',
-        maxHeight: 90,
         flexDirection: 'row',
-        marginBottom: 30
+        marginBottom: 30,
+        flexDirection: 'row',
+        alignItems:'center',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        maxHeight: 100
     },
     battery: {
-        flexDirection: 'row',
-        color: 'black'
+        backgroundColor: 'red',
+        height: 90
     },
     text: {
         fontSize: 25,
-        color: 'black',
+        color: 'white',
         width: '100%',
-        position:'absolute',
-        top: '30%',
         textAlign: 'center',
-        flex: 1
+        position: 'absolute'
     }
 })

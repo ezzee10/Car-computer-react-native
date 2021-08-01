@@ -24,7 +24,6 @@ export const LightItem = ({ item }) => {
        delete itemCopy.title;
 
        mqtt.publish(`esp/luces/${itemCopy.titleMqtt}`, Buffer.from(JSON.stringify(!active), "utf8"))
-       console.log(mqtt)
     }
 
     return (

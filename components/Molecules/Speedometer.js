@@ -8,8 +8,11 @@ export const Speedometer = ({ velocity }) => {
 
         <View style={styles.containSpeedometer}>
 
-            <View><Text style={{color: 'green', fontSize: 40}}>{velocity}</Text></View>
-
+            <View>
+                <Text style={{color: 'green', fontSize: 40}}>{velocity}</Text>
+                <Text style={{textAlign: 'center', fontSize: 16}}>Kms/h</Text>
+            </View>
+            
             
 
             {/* <AnimatedSpeedometer
