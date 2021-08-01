@@ -32,13 +32,13 @@ export const changeBattery = ( battery ) => ({
     payload: battery
 })
 
-export const startLoadingKms = () => {
+export const startCar = () => {
     return async( dispatch ) => {
 
         try {
             const result = await clienteAxios.get('/api/vehicle');
-            dispatch({ type: types.odometer, payload: result.data.vehicle[0].kilometresTotal });
-            dispatch({ type: types.changeOdometer2, payload: result.data.vehicle[0].kilometresPartial});
+
+            dispatch({ type: types.startCar, payload: result.data.vehicle[0]});
         } catch (e) {
             console.log('Error al cargar la cantidad de kilómetros: ' + e);
         }
@@ -65,7 +65,26 @@ export const changeSpeedometer = (velocity) => ({
     payload: velocity
 })
 
-export const restartOdometer2 = () => ({
-    type: types.restartOdometer2,
-    payload: 0
+export const restartOdometer2 = () => {
+
+    return async( dispatch ) => {
+
+        try {
+                await clienteAxios.patch('/api/vehicle', {kilometresTotal: store.getState().carStatus.odometer, 
+                kilometresPartial: 0});
+                dispatch({ type: types.restartOdometer2, payload: 0 });
+        } catch (e) {
+            console.log('Error al reiniciar la cantidad de kilómetros parciales: ' + e);
+        }
+    }
+}
+
+export const updateRotateKms = (kms) => ({
+    type: types.updateRotateKms,
+    payload: kms
+});
+
+export const updateTransmissionKms = (kms) => ({
+    type: types.updateTransmissionKms,
+    payload: kms
 })

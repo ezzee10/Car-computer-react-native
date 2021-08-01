@@ -8,7 +8,9 @@ const initialState = {
     battery: 0,
     seatBeltMessage: '',
     showAlertSeat: false,
-    odometer2: 0
+    odometer2: 0,
+    kmsMissingUpdateRotationWheels: null,
+    kmsMissingUpdateTransmission: null
 }
 
 export const carReducer = ( state = initialState, action) => {
@@ -61,6 +63,24 @@ export const carReducer = ( state = initialState, action) => {
             return {
                 ...state,
                 odometer2: 0
+            }
+        case types.startCar:
+            return {
+                ...state,
+                odometer: action.payload.kilometresTotal,
+                odometer2: action.payload.kilometresPartial,
+                kmsMissingUpdateRotationWheels: action.payload.kmsMissingUpdateRotationWheels,
+                kmsMissingUpdateTransmission: action.payload.kmsMissingUpdateTransmission
+            }
+        case types.updateRotateKms:
+            return {
+                ...state,
+                kmsMissingUpdateRotationWheels: action.payload,
+            }
+        case types.updateTransmissionKms:
+            return {
+                ...state,
+                kmsMissingUpdateTransmission: action.payload
             }
         default:
             return state;

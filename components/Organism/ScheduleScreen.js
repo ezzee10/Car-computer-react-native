@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, Text, TouchableHighlight, ScrollView, Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import {convertDate} from '../../helpers/convertDate';
@@ -6,12 +6,15 @@ import { updateNote } from '../../actions/notes';
 import DialogInput from 'react-native-dialog-input';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { clienteAxios } from '../../config/config';
+import { updateRotateKms, updateTransmissionKms } from '../../actions/stateCar';
 
 export const ScheduleScreen = () => {
 
   const dispatch = useDispatch();
 
-  const { note  } = useSelector(state => state.note);
+  const { note } = useSelector(state => state.note);
+
+  const {odometer, kmsMissingUpdateRotationWheels, kmsMissingUpdateTransmission } = useSelector(state => state.carStatus);
 
   const [date, setDate1] = useState(new Date(note.vtv));
 
@@ -33,7 +36,6 @@ export const ScheduleScreen = () => {
     const currentDate = selectedDate || date;
     setShow1(Platform.OS === 'ios');
     setDate1(currentDate);
-
   };
 
   const onChange2 = (event, selectedDate) => {
@@ -56,12 +58,34 @@ export const ScheduleScreen = () => {
     );  
   }
 
+  useEffect(() => {}, [handleRegister]);
+
+
+  const updateKmsEmail1 = async (kms) => {
+    try {
+      await clienteAxios.patch('/api/vehicle', {kmsMissingUpdateRotationWheels: parseInt(odometer) + parseInt(kms)});
+      dispatch(updateRotateKms(parseInt(odometer) + parseInt(kms)));
+        // kmsMissingUpdateTransmission: parseInt(odometer) + parseInt(transmission)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const updateKmsEmail2 = async (kms) => {
+    try {
+      await clienteAxios.patch('/api/vehicle', {kmsMissingUpdateTransmission: parseInt(odometer) + parseInt(kms)});
+      dispatch(updateTransmissionKms(parseInt(odometer) + parseInt(kms)));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+
   const handleRegister = async () => {
 
     const new_note = {
       vtv : date,
       fireExtinguisher: date2,
-      battery: date3,
       rotation: rotation,
       transmission: transmission
     }
@@ -136,7 +160,9 @@ export const ScheduleScreen = () => {
 
         </TouchableHighlight> 
 
-        <Text style={styles.label}>La rotación de cubiertas deberá realizarse dentro de <Text style={styles.data}>{rotation} km</Text></Text>
+        <Text style={styles.label}>La rotación de cubiertas deberá realizarse cada <Text style={styles.data}>{rotation} km</Text></Text>
+
+        <Text style={styles.label}>Kilómetros faltantes: <Text style={styles.data}>{kmsMissingUpdateRotationWheels - odometer === 0 ? 'Es tiempo de rotar las cubiertas' : kmsMissingUpdateRotationWheels - odometer + 'km'}</Text></Text>
 
         <View style={{flexDirection: 'row'}}>
 
@@ -162,11 +188,11 @@ export const ScheduleScreen = () => {
             isDialogVisible={showDialog1}
             title={"Rotación de cubiertas"}
             message={"Cantidad de kilómetros para rotación de cubiertas"}
-            submitInput={ (inputText) => {setRotation(inputText), setShowDialog1(false)} }
+            submitInput={ (inputText) => { setRotation(parseInt(inputText)), setShowDialog1(false), updateKmsEmail1(parseInt(inputText))} }
             closeDialog={ () => setShowDialog1(false)}
             hintInput={rotation.toString()}
             hintTextColor={'white'}
-            submitText={"Enviar"}
+            submitText={"Modificar"}
             cancelText={"Cancelar"}
             dialogStyle={{
               backgroundColor: 'purple'
@@ -177,21 +203,40 @@ export const ScheduleScreen = () => {
 
         <Text style={styles.label}>El chequeo de transmisión deberá realizarse dentro de <Text style={styles.data}>{transmission} km</Text></Text>
 
-        <TouchableHighlight 
-          style ={styles.button}
-          onPress={() => setShowDialog2(true)}
-        >
-          <Text style={styles.appButtonText}> Modificar </Text>
+        <Text style={styles.label}>Kilómetros faltantes: <Text style={styles.data}>{kmsMissingUpdateTransmission - odometer === 0 ? 'Es tiempo de realizar el chequeo de transmisión' : kmsMissingUpdateTransmission - odometer + 'km'}</Text></Text>
+        
+        <View style={{flexDirection: 'row'}}>
 
-        </TouchableHighlight> 
+          <TouchableHighlight 
+            style ={styles.button}
+            onPress={() => setShowDialog2(true)}
+          >
+            <Text style={styles.appButtonText}> Modificar </Text>
+
+          </TouchableHighlight> 
+
+          <TouchableHighlight 
+                style ={[styles.buttonRestart, styles.button]}
+                onPress={() => setShowDialog1(true)}
+              >
+                <Text style={styles.appButtonText}> Reiniciar </Text>
+
+          </TouchableHighlight> 
+
+        </View>
+
 
         <DialogInput isDialogVisible={showDialog2}
             title={"Chequeo de transmisión"}
             message={"Cantidad de kilómetros para chequeo de transmisión"}
-            submitInput={ (inputText) => {setTransmission(inputText), setShowDialog2(false)} }
+            submitInput={ (inputText) => {setTransmission(inputText), setShowDialog2(false), updateKmsEmail2(parseInt(inputText))} }
             closeDialog={ () => setShowDialog2(false)}
-            submitText={"Enviar"}
+            hintInput={transmission.toString()}
+            submitText={"Modificar"}
             cancelText={"Cancelar"}
+            dialogStyle={{
+              backgroundColor: 'purple'
+            }}
         >
         </DialogInput>
 
@@ -202,6 +247,7 @@ export const ScheduleScreen = () => {
           <Text style={styles.appButtonText}>GUARDAR</Text>
         </TouchableHighlight> 
 
+      
       </View>
     </ScrollView>
   )
@@ -240,7 +286,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: 'white',
-    marginBottom: 40,
+    marginBottom: 10,
     textAlign: 'center',
     fontSize: 20
   },

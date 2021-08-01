@@ -45,6 +45,12 @@ export const types = {
 
     saveTravel: '[SaveTravel]',
 
+    startCar: '[startCar]',
+
+    updateRotateKms: '[updateRotateKms]',
+
+    updateTransmissionKms: '[updateTransmissionKms]',
+
     //SAVE STORAGE
 
     saveOdometer: '[SaveOdometer]'

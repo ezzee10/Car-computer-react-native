@@ -73,7 +73,7 @@ export const DriveScreen = () => {
         <View style={styles.containerDriving}>
 
             <AwesomeAlert
-                show={showAlertSeat}
+                show={false}
                 title="Cinturón de seguridad"
                 message={seatBeltMessage}
                 closeOnTouchOutside={false}
