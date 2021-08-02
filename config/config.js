@@ -3,4 +3,4 @@ import variables from '../variables';
 
 export const clienteAxios = axios.create({
     baseURL: variables.REACT_APP_BACKEND_URL,
-});
+}, console.log(variables.REACT_APP_BACKEND_URL));
