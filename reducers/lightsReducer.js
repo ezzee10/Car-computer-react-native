@@ -9,6 +9,8 @@ const initialState = {
 
 export const lightsReducer = ( state = initialState, action) => {
 
+    console.log(initialState.lights);
+
     switch (action.type) {
         case types.switchStateLight:
             return {

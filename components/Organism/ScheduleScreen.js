@@ -16,9 +16,9 @@ export const ScheduleScreen = () => {
 
   const {odometer, kmsMissingUpdateRotationWheels, kmsMissingUpdateTransmission } = useSelector(state => state.carStatus);
 
-  const [date, setDate1] = useState(new Date(note?.vtv));
+  const [date, setDate1] = useState(note?.vtv ? new Date(note.vtv) : null);
 
-  const [date2, setDate2] = useState(new Date(note?.fireExtinguisher));
+  const [date2, setDate2] = useState(note?.fireExtinguisher ? new Date(note?.fireExtinguisher) : null);
 
   const [rotation, setRotation] = useState(note?.rotation);
 
@@ -112,7 +112,7 @@ export const ScheduleScreen = () => {
         {showDatePicker1 ? 
           <DateTimePicker
             testID="dateTimePicker"
-            value={date}
+            value={date ? date : new Date()}
             mode={'date'}
             is24Hour={true}
             display="default"
@@ -139,7 +139,7 @@ export const ScheduleScreen = () => {
         {showDatePickerTwo ? 
           <DateTimePicker
             testID="dateTimePicker"
-            value={date2}
+            value={date2 ? date2 : new Date()}
             mode={'date'}
             is24Hour={true}
             display="default"

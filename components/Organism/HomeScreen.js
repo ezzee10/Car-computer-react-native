@@ -7,7 +7,6 @@ import Icons from 'react-native-vector-icons/Ionicons'
 import { switchStateCar, changeStateDoors } from '../../actions/stateCar';
 import { useDispatch, useSelector } from 'react-redux';
 
-
 export const HomeScreen = () => {
 
     const renderItem = ({item}) => (
@@ -24,7 +23,6 @@ export const HomeScreen = () => {
 
         mqtt.publish('esp/contacto', Buffer.from(JSON.stringify(!active), "utf8"))
         dispatch(switchStateCar(!active))
-        
     }
 
     const handleDoors = () => {
@@ -32,7 +30,6 @@ export const HomeScreen = () => {
         dispatch(changeStateDoors(!doors))
     }
 
-   
     return (
 
         <View style={styles.vista}>

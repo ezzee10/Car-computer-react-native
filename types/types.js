@@ -51,6 +51,8 @@ export const types = {
 
     updateTransmissionKms: '[updateTransmissionKms]',
 
+    switchInteriorLight: '[switchInteriorLight]',
+
     //SAVE STORAGE
 
     saveOdometer: '[SaveOdometer]'

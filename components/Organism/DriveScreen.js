@@ -23,7 +23,7 @@ export const DriveScreen = () => {
 
     const { active, odometer, odometer2, velocity, battery, seatBeltMessage, showAlertSeat } = useSelector(state => state.carStatus);
 
-    const beaconRedux = useSelector(state => state.lights.lights[4].active); 
+    const beaconRedux = useSelector(state => state.lights.lights[1].active); 
 
     const lightLeftRedux = useSelector(state => state.lights.leftTurn);
     
@@ -74,7 +74,7 @@ export const DriveScreen = () => {
 
             <AwesomeAlert
                 show={showAlertSeat}
-                title="Cinturón de seguridad"
+                title="Alerta"
                 message={seatBeltMessage}
                 closeOnTouchOutside={false}
                 closeOnHardwareBackPress={false}
@@ -109,7 +109,6 @@ export const DriveScreen = () => {
                     size={100}
                 />
                 
-        
                 <Speedometer 
                     velocity = {velocity}
                 />

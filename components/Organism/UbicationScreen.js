@@ -56,6 +56,7 @@ export const UbicationScreen = () => {
         Geolocation.getCurrentPosition(
             (position) => {
               let {latitude, longitude} = position.coords;
+              console.log(position.coords);
               setLocation({...location, loaded: true, latitude, longitude})
             },
             (error) => {
